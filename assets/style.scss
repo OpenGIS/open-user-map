@@ -1,0 +1,1637 @@
+// CPT Page
+.post-php.post-type-oum-location,
+.post-new-php.post-type-oum-location {
+  #location_customfields .inside {
+    .form-table {
+      > tbody > tr {
+        margin-bottom: 20px;
+        border-bottom: 1px solid #E8E8EB;
+
+        > th, > td {
+          padding: 20px 10px;
+        }
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+  
+  .oum_custom_field_description {
+    font-style: italic;
+    font-size: 14px;
+    opacity: 0.8;
+    padding: 8px;
+  }
+
+  .geo-coordinates-wrap {
+    display: flex;
+
+    .map-wrap {
+      position: relative;
+      width: 50%;
+      padding-top: 30%;
+  
+      #mapGetLocation {
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        border: 1px solid #888;
+        border-radius: 2px;
+
+        .leaflet-control-geosearch {
+          &.leaflet-geosearch-bar {
+            form {
+              background-image: url(images/ico_search_address_2.png);
+              background-position: right 1px;
+              background-repeat: no-repeat;
+              background-size: 30px;
+              background-color: #fff;
+  
+              input[type=text] {
+                width: calc(100% - 35px);
+                padding: 9px 13px 9px 0;
+                min-width: unset;
+                min-height: unset;
+                border: none !important;
+                box-shadow: none !important;
+                margin: 0 !important;
+                outline: none !important;
+                font-size: 14px;
+
+                @media screen and (max-width: 768px) {
+                  font-size: 16px;
+                }
+              }
+    
+              button.reset {
+                right: 25px;
+                background-color: #fff;
+                color: black;
+                margin: 0;
+                padding: 0 8px;
+                border: none;
+                box-shadow: none;
+                margin: 0;
+                outline: none;
+                font-size: 14px;
+                opacity: 0.5;
+
+                &:hover {
+                  opacity: 1;
+                }
+              }
+            }
+          }
+        }
+
+        a {
+          text-decoration: none !important;
+          padding: 0;
+          margin: 0;
+        }
+
+        .leaflet-tile-pane img.leaflet-tile {
+          box-shadow: none;
+          padding: 0;
+          margin: 0;
+          border: none;
+          border-radius: unset;
+        }
+
+        &.map-style_Custom1 {
+          // map tiles
+          .leaflet-tile-pane .leaflet-layer:first-of-type .leaflet-tile {
+            filter: saturate(3);
+          }
+          // label tiles
+        }
+  
+        &.map-style_Custom2 {
+          // map tiles
+          .leaflet-tile-pane .leaflet-layer:first-of-type .leaflet-tile {
+            filter: sepia(1) invert(0) saturate(28) hue-rotate(-53deg);
+          }
+  
+          // label tiles
+          .leaflet-tile-pane .leaflet-layer:nth-child(2) .leaflet-tile {
+            filter: sepia(0) contrast(1) invert(1) brightness(2);
+          }
+        }
+  
+        &.map-style_Custom3 {
+          // map tiles
+          .leaflet-tile-pane .leaflet-layer:first-of-type .leaflet-tile {
+            filter: sepia(1) invert(1) saturate(100) brightness(1) hue-rotate(-300deg);
+          }
+  
+          // label tiles
+          .leaflet-tile-pane .leaflet-layer:nth-child(2) .leaflet-tile {
+            filter: sepia(0) contrast(1) invert(1) brightness(2);
+          }
+        }
+
+        .leaflet-control-locate-location-arrow {
+          mask-image: none;
+          background-image: url(images/ico_mylocation.svg);
+          background-color: transparent;
+          background-size: contain;
+          background-position: center center;
+          background-repeat: no-repeat;
+        }
+      }
+    }
+
+    .input-wrap {
+      width: 50%;
+      padding: 0 50px;
+
+      .geo-coordinates-hint {
+        box-sizing: border-box;
+        padding: 7%;
+        margin-bottom: 30px;
+
+        div.hint {
+          font-size: 20px;
+          margin-bottom: 20px;
+        }
+
+        .latlng-wrap {
+          >div:not(.hint) {
+            display: flex;
+            justify-content: space-between;
+
+            >div {
+              width: 49%;
+            }
+          }
+        }
+      }
+    }
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+
+      .map-wrap,
+      .input-wrap {
+        width: 100%;
+      }
+
+      .input-wrap {
+        padding: 0;
+      }
+    }
+  }
+
+  #oum_location_image_preview {
+    .remove-upload {
+      display: none;
+    }
+
+    &.has-image {
+      width: 400px;
+      max-width: 100%;
+      position: relative;
+  
+      img {
+        position: relative;
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .remove-upload {
+        position: absolute;
+        display: block;
+        z-index: 10;
+        top: 15px;
+        right: 15px;
+        cursor: pointer;
+        opacity: 0.8;
+        width: 20px;
+        height: 20px;
+        border-radius: 100px;
+        line-height: 18px;
+        text-align: center;
+        background: indianred;
+        color: #fff;
+        font-family: sans-serif;
+        font-size: 17px;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  #oum_location_audio_preview {
+    .remove-upload {
+      display: none;
+    }
+
+    &.has-audio {
+      width: 400px;
+      max-width: 100%;
+      margin-top: 15px;
+      margin-left: 3px;
+      position: relative;
+
+      .remove-upload {
+        display: block;
+        position: absolute;
+        z-index: 10;
+        top: 10px;
+        right: -30px;
+        cursor: pointer;
+        opacity: 0.8;
+        width: 20px;
+        height: 20px;
+        border-radius: 100px;
+        line-height: 18px;
+        text-align: center;
+        background: indianred;
+        color: #fff;
+        font-family: sans-serif;
+        font-size: 17px;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  input.oum-switch[type="checkbox"] {
+    position: relative;
+    left: 0;
+    top: 0;
+    z-index: 0;
+    appearance: none;
+    visibility: hidden;
+
+    + label {
+      position: relative;
+      display: block;
+      cursor: pointer;
+      font-family: sans-serif;
+      font-size: 14px;
+      line-height: 23px;
+      padding-left: 50px;
+      position: relative;
+      margin-top: -12px;
+
+      &::before {
+        box-sizing: border-box;
+        width: 40px;
+        height: 20px;
+        border-radius: 30px;
+        border: 2px solid #ddd;
+        background-color: #eee;
+        content: "";
+        margin-right: 15px;
+        transition: background-color 0.5s linear;
+        z-index: 5;
+        position: absolute;
+        left: 0px;
+        top: 1px;
+      }
+
+      &::after {
+        box-sizing: border-box;
+        width: 16px;
+        height: 16px;
+        border-radius: 30px;
+        background-color: #fff;
+        content: "";
+        transition: margin 0.1s linear;
+        box-shadow: 0px 0px 5px #aaa;
+        position: absolute;
+        left: 2px;
+        top: 3px;
+        z-index: 10;
+      }
+    }
+
+    &:checked + label::before {
+      background-color: #e02aaf;
+    }
+
+    &:checked + label::after {
+      margin: 0 0 0 20px;
+    }
+  }
+
+  .marker_icons {
+    display: flex;
+    flex-wrap: wrap;
+
+    label {
+      width: 25%;
+      overflow: hidden;
+      border: 4px solid lightgrey;
+      margin: 5px;
+      position: relative;
+
+      input {
+        display: none;
+      }
+
+      &.checked,
+      &:not(.pro-only):hover {
+        border-color: #e02aaf;
+      }
+
+      .marker_icon_preview {
+        height: 40px;
+        margin: 5px;
+        background-position: center center;
+        background-size: contain;
+        background-repeat: no-repeat;
+
+        &[data-style="default"] {
+          background-image: url('../src/leaflet/images/marker-icon_default-2x.png');
+        }
+    
+        &[data-style="custom1"] {
+          background-image: url('../src/leaflet/images/marker-icon_custom1-2x.png');
+        }
+
+        &[data-style="custom2"] {
+          background-image: url('../src/leaflet/images/marker-icon_custom2-2x.png');
+        }
+
+        &[data-style="custom3"] {
+          background-image: url('../src/leaflet/images/marker-icon_custom3-2x.png');
+        }
+
+        &[data-style="custom4"] {
+          background-image: url('../src/leaflet/images/marker-icon_custom4-2x.png');
+        }
+
+        &[data-style="user1"] {
+          background-image: url('../src/leaflet/images/marker-icon_user1-2x.png');
+        }
+      }
+
+      .name {
+        text-align: center;
+        padding: 0 5px 5px;
+      }
+    }
+  }
+}
+
+// Taxonomy Pages: Types
+.taxonomy-oum-type {
+  .marker_icons {
+    display: flex;
+    flex-wrap: wrap;
+
+    label {
+      width: 50px;
+      height: 82px;
+      overflow: hidden;
+      border: 4px solid white;
+      margin: 5px;
+      position: relative;
+
+      input {
+        display: none;
+      }
+
+      &.pro-only {
+        cursor: default;
+        overflow: visible;
+
+        &:before {
+          content: 'PRO';
+          display: inline-block;
+          position: absolute;
+          background: red;
+          color: white;
+          right: 0;
+          top: 0;
+          font-size: 11px;
+          text-align: center;
+          padding: 0px 4px;
+        }
+
+        .oum-gopro-text {
+          position: absolute;
+          top: 15px;
+          right: -130px;
+          width: 115px;
+        }
+      }
+
+      &.pro:before {
+        content: 'PRO';
+        display: inline-block;
+        position: absolute;
+        background: red;
+        color: white;
+        right: 0;
+        top: 0;
+        font-size: 11px;
+        text-align: center;
+        padding: 0px 4px;
+      }
+
+      &.checked,
+      &:not(.pro-only):hover {
+        border-color: #e02aaf;
+      }
+
+      .marker_icon_preview {
+        width: 50px;
+        height: 82px;
+        background-position: center center;
+        background-size: 50%;
+        background-repeat: no-repeat;
+
+        &[data-style="default"] {
+          background-image: url('../src/leaflet/images/marker-icon_default-2x.png');
+        }
+    
+        &[data-style="custom1"] {
+          background-image: url('../src/leaflet/images/marker-icon_custom1-2x.png');
+        }
+
+        &[data-style="custom2"] {
+          background-image: url('../src/leaflet/images/marker-icon_custom2-2x.png');
+        }
+
+        &[data-style="custom3"] {
+          background-image: url('../src/leaflet/images/marker-icon_custom3-2x.png');
+        }
+
+        &[data-style="custom4"] {
+          background-image: url('../src/leaflet/images/marker-icon_custom4-2x.png');
+        }
+
+        &[data-style="user1"] {
+          background-image: url('../src/leaflet/images/marker-icon_user1-2x.png');
+        }
+      }
+
+      &.label_marker_user_icon {
+        width: 170px;
+
+        .icon_upload {
+          position: absolute;
+          width: 115px;
+          right: 3px;
+          top: 62%;
+          transform: translateY(-50%);
+
+          .button {
+            cursor: pointer;
+            line-height: 1.5;
+            padding: 5px;
+            text-align: center;
+            white-space: pre-wrap;
+          }
+
+          .description {
+            font-style: italic;
+            font-size: 11px;
+            opacity: 0.8;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Taxonomy Pages: Regions
+.taxonomy-oum-region {
+
+  .term-description-wrap,
+  .term-slug-wrap {
+    display: none;
+  }
+
+  .geo-coordinates-wrap {
+    .map-wrap {
+      position: relative;
+      aspect-ratio: 1.53;
+
+      #mapGetRegion {
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+
+        .leaflet-control-geosearch {
+          &.leaflet-geosearch-bar {
+            form {
+              background-image: url(images/ico_search_address_2.png);
+              background-position: right 1px;
+              background-repeat: no-repeat;
+              background-size: 30px;
+              background-color: #fff;
+  
+              input[type=text] {
+                width: calc(100% - 35px);
+                padding: 9px 13px 9px 0;
+                min-width: unset;
+                min-height: unset;
+                border: none !important;
+                box-shadow: none !important;
+                margin: 0 !important;
+                outline: none !important;
+                font-size: 14px;
+
+                @media screen and (max-width: 768px) {
+                  font-size: 16px;
+                }
+              }
+    
+              button.reset {
+                right: 25px;
+                background-color: #fff;
+                color: black;
+                margin: 0;
+                padding: 0 8px;
+                border: none;
+                box-shadow: none;
+                margin: 0;
+                outline: none;
+                font-size: 14px;
+                opacity: 0.5;
+
+                &:hover {
+                  opacity: 1;
+                }
+              }
+            }
+          }
+        }
+
+        a {
+          text-decoration: none !important;
+          padding: 0;
+          margin: 0;
+        }
+
+        .leaflet-tile-pane img.leaflet-tile {
+          box-shadow: none;
+          padding: 0;
+          margin: 0;
+          border: none;
+          border-radius: unset;
+        }
+
+        input.glass {
+          box-shadow: none !important;
+          border: none !important;
+        }
+
+        &.map-style_Custom1 {
+
+          // map tiles
+          .leaflet-tile-pane .leaflet-layer:first-of-type .leaflet-tile {
+            filter: saturate(3);
+          }
+
+          // label tiles
+        }
+
+        &.map-style_Custom2 {
+
+          // map tiles
+          .leaflet-tile-pane .leaflet-layer:first-of-type .leaflet-tile {
+            filter: sepia(1) invert(0) saturate(28) hue-rotate(-53deg);
+          }
+
+          // label tiles
+          .leaflet-tile-pane .leaflet-layer:nth-child(2) .leaflet-tile {
+            filter: sepia(0) contrast(1) invert(1) brightness(2);
+          }
+        }
+
+        &.map-style_Custom3 {
+
+          // map tiles
+          .leaflet-tile-pane .leaflet-layer:first-of-type .leaflet-tile {
+            filter: sepia(1) invert(1) saturate(100) brightness(1) hue-rotate(-300deg);
+          }
+
+          // label tiles
+          .leaflet-tile-pane .leaflet-layer:nth-child(2) .leaflet-tile {
+            filter: sepia(0) contrast(1) invert(1) brightness(2);
+          }
+        }
+      }
+    }
+
+    .input-wrap {
+      .latlng-wrap {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 1rem;
+
+        >div {
+          input {
+            width: 100%;
+          }
+
+          &.zoom-wrap {
+            width: 100px;
+          }
+        }
+      }
+
+      .geo-coordinates-hint {
+        box-sizing: border-box;
+        padding: 15px;
+        border: 1px solid lightgrey;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        background-color: floralwhite;
+      }
+    }
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+
+      .map-wrap,
+      .input-wrap {
+        width: 100%;
+      }
+
+      .input-wrap {
+        padding: 0;
+      }
+    }
+  }
+}
+
+// Settings Page
+.oum-location_page_open-user-map-settings,
+.toplevel_page_open-user-map {
+
+  &.oum-settings-wizard {
+    background: #fff;
+
+    #adminmenu li#menu-settings a::after {
+      border-right-color: rgb(109,189,230);
+    }
+
+    #wpwrap {
+      height: 100%;
+  
+      #wpbody {
+        height: 100%;
+      }
+    }
+
+    .oum-wizard {
+      position: absolute;
+      z-index: 999;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: -20px;
+      padding: 0;
+      background: #fff;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+  
+      >* {
+        display: flex;
+        flex-direction: column;
+        padding: 30vh 9% 9% 9%;
+        box-sizing: border-box;
+      }
+
+      .oum-inline-plus {
+        display: inline-block;
+        background: #e02aaf;
+        color: #fff;
+        border-radius: 15px;
+        width: 16px;
+        height: 16px;
+        line-height: 13px;
+        text-align: center;
+        font-size: 17px;
+      }
+  
+      .hero {
+        background: url(images/block-bg.jpg) no-repeat center #26aee7;
+        background-size: cover;
+        color: white;
+        width: 100%;
+  
+        .logo {
+          background: url(images/icon-256x256.png) no-repeat top left transparent;
+          background-size: 50px;
+          width: 330px;
+          height: 50px;
+          margin-bottom: 30px;
+          padding-left: 60px;
+          position: absolute;
+          top: 50px;
+          font-size: 24px;
+          font-weight: bold;
+          line-height: 50px;
+          letter-spacing: -1px;
+        }
+  
+        ul.steps {
+          display: flex;
+          gap: 15px;
+          position: absolute;
+          top: 85vh;
+          left: 22%;
+  
+          li {
+            display: block;
+            border: 2px solid #fff;
+            border-radius: 100px;
+            width: 8px;
+            height: 8px;
+            background: none;
+  
+            &.done {
+              background: #fff;
+            }
+          }
+        }
+  
+        .overline {
+          font-weight: bold;
+          color: #fff;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          font-size: 22px;
+          opacity: 0.7;
+          margin-bottom: 30px;
+        }
+  
+        h1 {
+          color: #fff;
+          font-size: 70px;
+          font-weight: bold;
+          letter-spacing: 4px;
+          line-height: 1;
+          margin: 0;
+        }
+      }
+  
+      .step-content {
+        width: 100%;
+        max-width: 900px;
+        margin: 0;
+
+        .intro {
+          margin-bottom: 30px;
+        }
+
+        .map-types {
+          display: flex;
+          justify-content: space-between;
+          gap: 30px;
+          margin-bottom: 30px;
+      
+          .option {
+            flex-basis: 300px;
+      
+            label {
+              display: block;
+              height: calc(100% - 8px);
+              position: relative;
+              padding: 0;
+              background: #fff;
+              border: 4px solid #f0f0f1;
+      
+              .map-type-preview {
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: top right;
+                aspect-ratio: 2;
+        
+                &[data-type="interactive"] {
+                  background-image: url(images/map_type_interactive.jpg);
+                }
+      
+                &[data-type="simple"] {
+                  background-image: url(images/map_type_simple.jpg);
+                }
+              }
+      
+              .label-text {
+                padding: 23px 30px 20px 56px;
+                position: relative;
+      
+                h2 {
+                  margin-top: 0;
+                  margin-bottom: 6px;
+                }
+      
+                input[type=radio] {
+                  position: absolute;
+                  left: 25px;
+                  top: 29px;
+                }
+              }
+      
+      
+              &:has(input[type=radio]:checked) {
+                border-color: #e02aaf;
+                opacity: 1;
+              }
+      
+              &:has(input[type=radio]:not(:checked)) {
+                opacity: 0.6;
+      
+                &:hover {
+                  border-color: #e02aaf;
+                  opacity: 1;
+                }
+              }
+            }
+          }
+        }
+
+        .next-steps {
+          margin-bottom: 30px;
+
+          li {
+            margin-bottom: 20px;
+          }
+        }
+  
+        .button-primary {
+          font-size: 16px;
+          height: 49px;
+          line-height: 49px;
+          padding: 0 20px !important;
+        }
+      }
+    }
+  }
+
+  &:not(.oum-settings-wizard) {
+    .oum-wizard {
+      .hero {
+        display: none;
+      }
+    }
+  }
+
+  .nav-tab-wrapper {
+    .nav-tab {
+      outline: none;
+      box-shadow: none;
+      
+      .new-feature {
+        display: inline-block;
+        background: #50aa96;
+        color: white;
+        padding: 0px 4px;
+        font-size: 11px;
+      }
+    }
+  }
+
+  .tab-content {
+    .tab-pane {
+      display: none;
+      padding: 1rem;
+
+      &.active {
+        display: block;
+      }
+    }
+  }
+
+  .oum_support_hint {
+    opacity: 0.7;
+    margin-left: 5px;
+  }
+
+  .form-table td {
+    vertical-align: top;
+    padding-bottom: 60px;
+
+    &.top-padding-20 {
+      padding-top: 20px;
+
+      ol {
+        margin-top: 0;
+        margin-left: 20px;
+      }
+    }
+  }
+
+  .oum_2cols {
+    display: flex;
+
+    > div {
+      margin-right: 15px;
+    }
+  }
+
+  code.block {
+    white-space: pre-line;
+    display: inherit;
+    padding: 15px;
+  }
+
+  .description {
+    font-style: italic;
+    font-weight: normal;
+
+    ul {
+      list-style: disc;
+      padding: 0 15px;
+    }
+  }
+
+  .map-types {
+    display: flex;
+    gap: 30px;
+
+    .option {
+      width: 300px;
+
+      label {
+        display: block;
+        height: 100%;
+        position: relative;
+        padding: 0;
+        background: #fff;
+        border: 4px solid white;
+
+        .map-type-preview {
+          background-repeat: no-repeat;
+          background-size: cover;
+          background-position: top right;
+          aspect-ratio: 2;
+  
+          &[data-type="interactive"] {
+            background-image: url(images/map_type_interactive.jpg);
+          }
+
+          &[data-type="simple"] {
+            background-image: url(images/map_type_simple.jpg);
+          }
+        }
+
+        .label-text {
+          padding: 23px 30px 20px 56px;
+          position: relative;
+
+          h2 {
+            margin-top: 0;
+            margin-bottom: 6px;
+          }
+
+          input[type=radio] {
+            position: absolute;
+            left: 25px;
+            top: 31px;
+          }
+
+          #plus_button_label {
+            margin-top: 1rem;
+
+            input {
+              max-width: 100%;
+            }
+          }
+        }
+
+
+        &:has(input[type=radio]:checked) {
+          border-color: #e02aaf;
+          opacity: 1;
+        }
+
+        &:has(input[type=radio]:not(:checked)) {
+          opacity: 0.6;
+
+          &:hover {
+            border-color: #e02aaf;
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+
+  #oum_enable_add_location {
+    display: none;
+  }
+
+  .map_styles {
+    display: flex;
+    flex-wrap: wrap;
+
+    label {
+      width: 208px;
+      height: 208px;
+      overflow: hidden;
+      border: 4px solid white;
+      margin: 5px;
+      position: relative;
+
+      input {
+        display: none;
+      }
+
+      &.pro-only {
+        cursor: default;
+      }
+
+      &.pro:before {
+        content: 'PRO';
+        display: inline-block;
+        position: absolute;
+        background: red;
+        color: white;
+        right: 5px;
+        bottom: 5px;
+        padding: 0px 4px;
+        font-size: 11px;
+        border: 1px solid;
+      }
+
+      &.checked,
+      &:not(.pro-only):hover {
+        border-color: #e02aaf;
+      }
+
+      .map_style_preview {
+        width: 208px;
+        height: 208px;
+        background-position: center center;
+        background-size: cover;
+        background-repeat: no-repeat;
+
+        > div {
+          width: 100%;
+          text-align: center;
+          font-size: 12px;
+          padding: 5px;
+          background: rgba(255,255,255,0.9);
+        }
+
+        &.commercial > div{
+          &::after {
+            content: 'API KEY';
+            display: inline-block;
+            background: grey;
+            color: #fff;
+            margin-left: 5px;
+            padding: 2px 3px;
+            font-size: 10px;
+            line-height: 13px;
+            position: relative;
+            top: -1px;
+            border-radius: 2px;
+          }
+        }
+    
+        &[data-style="Stadia.StamenTonerLite"] {
+          background-image: url('images/map_style_Stamen.TonerLite.png');
+        }
+    
+        &[data-style="Esri.WorldStreetMap"] {
+          background-image: url('images/map_style_Esri.WorldStreetMap.png');
+        }
+    
+        &[data-style="OpenStreetMap.Mapnik"] {
+          background-image: url('images/map_style_OpenStreetMap.Mapnik.png');
+        }
+
+        &[data-style="OpenStreetMap.DE"] {
+          background-image: url('images/map_style_OpenStreetMap.DE.png');
+        }
+    
+        &[data-style="CartoDB.Positron"] {
+          background-image: url('images/map_style_CartoDB.Positron.png');
+        }
+
+        &[data-style="CartoDB.DarkMatter"] {
+          background-image: url('images/map_style_CartoDB.DarkMatter.png');
+        }
+
+        &[data-style="Esri.WorldImagery"] {
+          background-image: url('images/map_style_Esri.WorldImagery.png');
+        }
+    
+        &[data-style="Custom1"] {
+          background-image: url('images/map_style_Custom1.png');
+        }
+    
+        &[data-style="Custom2"] {
+          background-image: url('images/map_style_Custom2.png');
+        }
+    
+        &[data-style="Custom3"] {
+          background-image: url('images/map_style_Custom3.png');
+        }
+
+        &[data-style="MapBox.streets"] {
+          background-image: url('images/map_style_MapBox.streets.png');
+        }
+
+        &[data-style="MapBox.outdoors"] {
+          background-image: url('images/map_style_MapBox.outdoors.png');
+        }
+
+        &[data-style="MapBox.light"] {
+          background-image: url('images/map_style_MapBox.light.png');
+        }
+
+        &[data-style="MapBox.dark"] {
+          background-image: url('images/map_style_MapBox.dark.png');
+        }
+
+        &[data-style="MapBox.satellite"] {
+          background-image: url('images/map_style_MapBox.satellite.png');
+        }
+
+        &[data-style="MapBox.satellite-streets"] {
+          background-image: url('images/map_style_MapBox.satellite-streets.png');
+        }
+      }
+    }
+  }
+
+  .wrap-tile-provider-settings {
+    padding: 10px;
+    margin-top: 15px;
+  }
+
+  .marker_icons {
+    display: flex;
+    flex-wrap: wrap;
+
+    label {
+      width: 50px;
+      height: 82px;
+      overflow: hidden;
+      border: 4px solid white;
+      margin: 5px;
+      position: relative;
+
+      input {
+        display: none;
+      }
+
+      &.pro-only {
+        cursor: default;
+        overflow: visible;
+
+        &:before {
+          content: 'PRO';
+          display: inline-block;
+          position: absolute;
+          background: red;
+          color: white;
+          right: 0;
+          top: 0;
+          font-size: 11px;
+          text-align: center;
+          padding: 0px 4px;
+        }
+
+        .oum-gopro-text {
+          position: absolute;
+          top: 15px;
+          right: -130px;
+          width: 115px;
+        }
+      }
+
+      &.pro:before {
+        content: 'PRO';
+        display: inline-block;
+        position: absolute;
+        background: red;
+        color: white;
+        right: 0;
+        top: 0;
+        font-size: 11px;
+        text-align: center;
+        padding: 0px 4px;
+      }
+
+      &.checked,
+      &:not(.pro-only):hover {
+        border-color: #e02aaf;
+      }
+
+      .marker_icon_preview {
+        width: 50px;
+        height: 82px;
+        background-position: center center;
+        background-size: 50%;
+        background-repeat: no-repeat;
+
+        &[data-style="default"] {
+          background-image: url('../src/leaflet/images/marker-icon_default-2x.png');
+        }
+    
+        &[data-style="custom1"] {
+          background-image: url('../src/leaflet/images/marker-icon_custom1-2x.png');
+        }
+
+        &[data-style="custom2"] {
+          background-image: url('../src/leaflet/images/marker-icon_custom2-2x.png');
+        }
+
+        &[data-style="custom3"] {
+          background-image: url('../src/leaflet/images/marker-icon_custom3-2x.png');
+        }
+
+        &[data-style="custom4"] {
+          background-image: url('../src/leaflet/images/marker-icon_custom4-2x.png');
+        }
+
+        &[data-style="user1"] {
+          background-image: url('../src/leaflet/images/marker-icon_user1-2x.png');
+        }
+      }
+
+      &.label_marker_user_icon {
+        width: 170px;
+
+        .icon_upload {
+          position: absolute;
+          width: 115px;
+          right: 3px;
+          top: 62%;
+          transform: translateY(-50%);
+
+          .button {
+            cursor: pointer;
+            line-height: 1.5;
+            padding: 5px;
+            text-align: center;
+            white-space: pre-wrap;
+          }
+
+          .description {
+            font-style: italic;
+            font-size: 11px;
+            opacity: 0.8;
+          }
+        }
+      }
+    }
+  }
+
+  .geo-coordinates-wrap {
+    display: flex;
+
+    .map-wrap {
+      position: relative;
+      flex: 0 0 570px;
+      aspect-ratio: 1.53;
+      margin-bottom: auto;
+
+      #mapGetInitial {
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0; 
+
+        .leaflet-control-geosearch {
+          &.leaflet-geosearch-bar {
+            form {
+              background-image: url(images/ico_search_address_2.png);
+              background-position: right 1px;
+              background-repeat: no-repeat;
+              background-size: 30px;
+              background-color: #fff;
+  
+              input[type=text] {
+                width: calc(100% - 35px);
+                padding: 9px 13px 9px 0;
+                min-width: unset;
+                min-height: unset;
+                border: none !important;
+                box-shadow: none !important;
+                margin: 0 !important;
+                outline: none !important;
+                font-size: 14px;
+
+                @media screen and (max-width: 768px) {
+                  font-size: 16px;
+                }
+              }
+    
+              button.reset {
+                right: 25px;
+                background-color: #fff;
+                color: black;
+                margin: 0;
+                padding: 0 8px;
+                border: none;
+                box-shadow: none;
+                margin: 0;
+                outline: none;
+                font-size: 14px;
+                opacity: 0.5;
+
+                &:hover {
+                  opacity: 1;
+                }
+              }
+            }
+          }
+        }
+
+        a {
+          text-decoration: none !important;
+          padding: 0;
+          margin: 0;
+        }
+
+        .leaflet-tile-pane img.leaflet-tile {
+          box-shadow: none;
+          padding: 0;
+          margin: 0;
+          border: none;
+          border-radius: unset;
+        }
+
+        &.map-style_Custom1 {
+          // map tiles
+          .leaflet-tile-pane .leaflet-layer:first-of-type .leaflet-tile {
+            filter: saturate(3);
+          }
+          // label tiles
+        }
+  
+        &.map-style_Custom2 {
+          // map tiles
+          .leaflet-tile-pane .leaflet-layer:first-of-type .leaflet-tile {
+            filter: sepia(1) invert(0) saturate(28) hue-rotate(-53deg);
+          }
+  
+          // label tiles
+          .leaflet-tile-pane .leaflet-layer:nth-child(2) .leaflet-tile {
+            filter: sepia(0) contrast(1) invert(1) brightness(2);
+          }
+        }
+  
+        &.map-style_Custom3 {
+          // map tiles
+          .leaflet-tile-pane .leaflet-layer:first-of-type .leaflet-tile {
+            filter: sepia(1) invert(1) saturate(100) brightness(1) hue-rotate(-300deg);
+          }
+  
+          // label tiles
+          .leaflet-tile-pane .leaflet-layer:nth-child(2) .leaflet-tile {
+            filter: sepia(0) contrast(1) invert(1) brightness(2);
+          }
+        }
+      }
+    }
+
+    .input-wrap {
+      width: 50%;
+      padding: 0 50px;
+
+      .latlng-wrap {
+        display: flex;
+        justify-content: space-between;
+
+        >div {
+          input {
+            width: 100%;
+          }
+
+          &.zoom-wrap {
+            width: 100px;
+          }
+        }
+      }
+
+      .geo-coordinates-hint {
+        box-sizing: border-box;
+        padding: 15px;
+        border: 1px solid lightgrey;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        background-color: floralwhite;
+      }
+
+      .additional-map-settings {
+        input[type=number] {
+          max-width: 70px;
+        }
+      }
+    }
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+
+      .map-wrap,
+      .input-wrap {
+        width: 100%;
+      }
+
+      .input-wrap {
+        padding: 0;
+      }
+    }
+  }
+
+  .oum_custom_fields_wrapper {
+    table {
+      border-collapse: collapse;
+      border: 1px solid #c3c4c7;
+      margin-bottom: 15px;
+
+      th, 
+      td {
+        border: 1px solid #c3c4c7;
+        padding: 12px;
+        width: auto;
+        margin: 0;
+      }
+
+      thead {
+        tr {
+          th {
+            background: #e02aaf;
+            color: #fff;
+          }
+        }
+      }
+
+      tbody {
+        tr {
+          td {
+            .oum-custom-field-allow-empty {
+              display: block;
+              margin-top: 10px;
+            }
+          }
+
+          td.actions {
+            a {
+              text-decoration: none !important;
+              display: inline-block;
+      
+              &.up, 
+              &.down {
+                color: green;
+              }
+      
+              &.remove_button {
+                color: red;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  input.oum-switch[type="checkbox"] {
+    position: relative;
+    left: 0;
+    top: 0;
+    z-index: 0;
+    appearance: none;
+    visibility: hidden;
+
+    + label {
+      position: relative;
+      display: block;
+      cursor: pointer;
+      font-family: sans-serif;
+      font-size: 14px;
+      line-height: 23px;
+      padding-left: 50px;
+      position: relative;
+      margin-top: -12px;
+
+      &::before {
+        box-sizing: border-box;
+        width: 40px;
+        height: 20px;
+        border-radius: 30px;
+        border: 2px solid #ddd;
+        background-color: #eee;
+        content: "";
+        margin-right: 15px;
+        transition: background-color 0.5s linear;
+        z-index: 5;
+        position: absolute;
+        left: 0px;
+        top: 1px;
+      }
+
+      &::after {
+        box-sizing: border-box;
+        width: 16px;
+        height: 16px;
+        border-radius: 30px;
+        background-color: #fff;
+        content: "";
+        transition: margin 0.1s linear;
+        box-shadow: 0px 0px 5px #aaa;
+        position: absolute;
+        left: 2px;
+        top: 3px;
+        z-index: 10;
+      }
+    }
+
+    &:checked + label::before {
+      background-color: #e02aaf;
+    }
+
+    &:checked + label::after {
+      margin: 0 0 0 20px;
+    }
+  }
+
+  .oum-pro {
+    display: inline-block;
+    background: red;
+    color: white;
+    font-size: 11px;
+    text-align: center;
+    padding: 0px 4px;
+  }
+
+  .oum-gopro-tr td {
+    opacity: 0.65;
+  }
+
+  .oum-debug-info {
+    opacity: 0.5;
+
+    ul {
+      margin: 0;
+      padding: 0;
+    }
+  }
+}
+
+// Pagebuilder: Gutenberg & Elementor
+.wp-block.wp-block-open-user-map-map,
+.elementor-editor-active .elementor-widget-open_user_map_widget .elementor-widget-container,
+.elementor-editor-preview .elementor-widget-open_user_map_widget .elementor-widget-container{
+  background: url(images/block-bg.jpg) top center no-repeat;
+  background-size: cover;
+
+  .hint {
+    backdrop-filter: blur(3px);
+    position: relative;
+    padding: 50px 40px;
+    text-align: left;
+    color: white;
+
+    h5 {
+      font-size: 36px;
+      font-weight: 900;
+      margin: 0;
+      padding: 0;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+
+      &::before {
+        content: '';
+        display: block;
+        width: 80px;
+        height: 80px;
+        background: url(images/icon-256x256.png) center center no-repeat;
+        background-size: cover;
+        border: 5px solid #fff;
+        opacity: 0.8;
+      }
+    }
+
+    p {
+      font-size: 17px;
+    }
+
+    .components-button {
+      margin: 5px;
+
+      &.is-primary {
+        color: #fff;
+      }
+    }
+  }
+}

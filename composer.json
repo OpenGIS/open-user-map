@@ -1,0 +1,17 @@
+{
+    "name": "100plugins/open-user-map",
+    "description": "Let your visitors add locations directly from within the map.",
+    "type": "project",
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "Daniel Schönherr",
+            "email": "daniel@100wunder.de"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {"OpenUserMapPlugin\\": "./inc"}
+    }
+}

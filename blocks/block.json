@@ -1,0 +1,44 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "open-user-map/map",
+	"title": "Open User Map",
+    "textdomain": "open-user-map",
+	"description": "Insert a custom map featuring your own locations or an interactive map where anyone can add location pins without registering.",
+	"category": "widgets",
+    "icon": "location-alt",
+	"editorScript": "file:./build/index.js",
+	"editorStyle": "file:./assets/style.css",
+    "attributes": {
+        "lat": {
+            "type": "string"
+        },
+        "long": {
+            "type": "string"
+        },
+        "zoom": {
+            "type": "string"
+        },
+        "region": {
+            "type": "string"
+        },
+        "types": {
+            "type": "string"
+        },
+        "ids": {
+            "type": "string"
+        },
+        "size": {
+            "type": "string"
+        },
+        "size_mobile": {
+            "type": "string"
+        },
+        "height": {
+            "type": "string"
+        },
+        "height_mobile": {
+            "type": "string"
+        }
+    }
+}
