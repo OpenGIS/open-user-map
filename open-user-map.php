@@ -8,7 +8,7 @@ Plugin Name: Open User Map
 Plugin URI: https://wordpress.org/plugins/open-user-map/
 Description: Create a custom map featuring your own locations or an interactive map where anyone can add location pins without registering. The map is based on Leaflet JS and offers you many free map (incl. MapBox) and marker styles . So you do not need an API Key, Access Token or any other external registration.
 Author: 100plugins
-Version: 1.3.36
+Version: 1.3.38
 Author URI: https://www.open-user-map.com/
 License: GPLv3 or later
 Text Domain: open-user-map

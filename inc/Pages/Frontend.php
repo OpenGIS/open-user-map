@@ -45,6 +45,19 @@ class Frontend extends BaseController
         );
         // Prevent shortcode parsing by All In One SEO plugin
         add_filter( 'aioseo_disable_shortcode_parsing', '__return_true' );
+        // Prevent shortcode parsing by Slim SEO plugin
+        add_filter( 'slim_seo_skipped_shortcodes', function ( $shortcodes ) {
+            $shortcodes[] = 'open-user-map';
+            $shortcodes[] = 'open-user-map-location';
+            $shortcodes[] = 'open-user-map-gallery';
+            $shortcodes[] = 'open-user-map-list';
+            return $shortcodes;
+        } );
+        // Prevent block parsing by Slim SEO plugin
+        add_filter( 'slim_seo_skipped_blocks', function ( $blocks ) {
+            $blocks[] = 'open-user-map/map';
+            return $blocks;
+        } );
     }
 
 }

@@ -779,6 +779,7 @@
   margin: 0 0 15px;
   font-size: 16px;
   color: #333;
+  background-color: #fff;
   width: 100%;
 }
 .open-user-map .add-location .location-overlay-content #oum_add_location fieldset legend {

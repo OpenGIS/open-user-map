@@ -4,7 +4,7 @@ Tags: map, interactive map, leaflet, mapbox, regions
 Requires at least: 5.5
 Tested up to: 6.4
 Requires PHP: 7.0
-Stable tag: 1.3.36
+Stable tag: 1.3.38
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -271,6 +271,12 @@ Please do so! You can use the support forum to let us know about your ideas help
 7. More than 60 Settings to customize
 
 == Changelog ==
+= 1.3.38 =
+* Bugfix: much better json encodes (should prevent code breaks)
+* Bugfix: Prevent failing shortcode/block rendering by Slim SEO plugin
+* Style fixes
+* plugin version fix
+
 = 1.3.36 =
 * Bugfix: List View: Allow more than two locations
 * Bugfix: jQuery error on single location pages

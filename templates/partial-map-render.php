@@ -394,9 +394,9 @@ echo  ( $oum_enable_regions == 'on' && $regions && count( $regions ) > 0 ? 'true
           sourceElement.dispatchEvent(changeEvent);
         };
 
-        /* Transfer PHP array to JS array */
+        /* Transfer PHP array to JS json */
         var oum_all_locations = <?php 
-echo  json_encode( $oum_all_locations ) ;
+echo  json_encode( $oum_all_locations, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_SLASHES ) ;
 ?>;
 
         /* Group Locations by marker categories (if exist) for further processing */
