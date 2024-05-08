@@ -17,10 +17,12 @@ document.addEventListener('DOMContentLoaded', function(e) {
   if(document.getElementById('mapGetLocation') != null) {
     //init map
     const map = L.map('mapGetLocation', {
-      attributionControl: false,
+      attributionControl: true,
       gestureHandling: true,
       minZoom: (oum_minimum_zoom_level) ? oum_minimum_zoom_level : '',
     });
+
+    map.attributionControl.setPrefix(false);
 
     const enableCurrentLocation = oum_enable_currentlocation ? true : false;
 

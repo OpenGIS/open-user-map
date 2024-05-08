@@ -784,18 +784,18 @@
 .toplevel_page_open-user-map:not(.oum-settings-wizard) .oum-wizard .hero {
   display: none;
 }
-.oum-location_page_open-user-map-settings .nav-tab-wrapper .nav-tab,
-.toplevel_page_open-user-map .nav-tab-wrapper .nav-tab {
-  outline: none;
-  box-shadow: none;
-}
-.oum-location_page_open-user-map-settings .nav-tab-wrapper .nav-tab .new-feature,
-.toplevel_page_open-user-map .nav-tab-wrapper .nav-tab .new-feature {
+.oum-location_page_open-user-map-settings .new-feature,
+.toplevel_page_open-user-map .new-feature {
   display: inline-block;
   background: #50aa96;
   color: white;
   padding: 0px 4px;
-  font-size: 11px;
+  font-size: 12px;
+}
+.oum-location_page_open-user-map-settings .nav-tab-wrapper .nav-tab,
+.toplevel_page_open-user-map .nav-tab-wrapper .nav-tab {
+  outline: none;
+  box-shadow: none;
 }
 .oum-location_page_open-user-map-settings .tab-content .tab-pane,
 .toplevel_page_open-user-map .tab-content .tab-pane {

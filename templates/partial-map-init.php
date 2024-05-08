@@ -26,7 +26,7 @@ $text_notify_me_on_publish_name = __( 'Your name', 'open-user-map' );
 $text_notify_me_on_publish_email = __( 'Your email', 'open-user-map' );
 $oum_enable_currentlocation = ( get_option( 'oum_enable_currentlocation' ) ? 'true' : 'false' );
 $oum_disable_oum_attribution = get_option( 'oum_disable_oum_attribution' );
-$oum_collapse_filter = ( get_option( 'oum_collapse_filter' ) ? 'true' : 'false' );
+$oum_collapse_filter = ( get_option( 'oum_collapse_filter' ) ? 'use-collapse' : '' );
 $oum_ui_color = ( get_option( 'oum_ui_color' ) ? get_option( 'oum_ui_color' ) : $this->oum_ui_color_default );
 $oum_plus_button_label = ( get_option( 'oum_plus_button_label' ) ? get_option( 'oum_plus_button_label' ) : __( 'Add location', 'open-user-map' ) );
 $oum_marker_types_label = ( get_option( 'oum_marker_types_label' ) ? get_option( 'oum_marker_types_label' ) : $this->oum_marker_types_label_default );
@@ -108,67 +108,58 @@ if ( $oum_enable_regions == 'on' ) {
         'taxonomy'   => 'oum-region',
         'hide_empty' => false,
         'meta_query' => array(
-        'relation' => 'AND',
-        array(
-        'key'     => 'oum_lat',
-        'compare' => 'EXISTS',
-    ),
-        array(
-        'key'     => 'oum_lng',
-        'compare' => 'EXISTS',
-    ),
-        array(
-        'key'     => 'oum_zoom',
-        'compare' => 'EXISTS',
-    ),
-    ),
+            'relation' => 'AND',
+            array(
+                'key'     => 'oum_lat',
+                'compare' => 'EXISTS',
+            ),
+            array(
+                'key'     => 'oum_lng',
+                'compare' => 'EXISTS',
+            ),
+            array(
+                'key'     => 'oum_zoom',
+                'compare' => 'EXISTS',
+            ),
+        ),
     ) );
 }
 // Taxonomy: Types (Marker Categories)
-$types = get_terms( array(
-    'taxonomy'   => 'oum-type',
-    'hide_empty' => false,
-) );
+$types = ( get_terms( 'oum-type' ) && !is_wp_error( get_terms( 'oum-type' ) ) ? get_terms( 'oum-type' ) : false );
 $query = array(
     'post_type'      => 'oum-location',
     'posts_per_page' => -1,
     'fields'         => 'ids',
 );
 // Custom Attribute: Filter for types
-
 if ( isset( $block_attributes['types'] ) && $block_attributes['types'] != '' ) {
     $selected_types_slugs = explode( '|', $block_attributes['types'] );
-    $query['tax_query'] = array( array(
+    $query['tax_query'] = array(array(
         'taxonomy' => 'oum-type',
         'field'    => 'slug',
         'terms'    => $selected_types_slugs,
-    ) );
+    ));
     //overwrite types with filtered types
     $types = [];
     foreach ( $selected_types_slugs as $slug ) {
         $types[] = get_term_by( 'slug', $slug, 'oum-type' );
     }
 }
-
 // Custom Attribute: Filter for ids
-
 if ( isset( $block_attributes['ids'] ) && $block_attributes['ids'] != '' ) {
     $selected_ids = explode( '|', $block_attributes['ids'] );
     $query['include'] = $selected_ids;
 }
-
 // Custom Attribute: Pre-select region
-
 if ( isset( $regions ) && isset( $block_attributes['region'] ) && $block_attributes['region'] != '' ) {
     $oum_start_region_name = $block_attributes['region'];
-    $regions_filtered = array_filter( $regions, function ( $obj ) use( $oum_start_region_name ) {
+    $regions_filtered = array_filter( $regions, function ( $obj ) use($oum_start_region_name) {
         return $obj->name == $oum_start_region_name;
     } );
-    if ( !empty($regions_filtered) ) {
+    if ( !empty( $regions_filtered ) ) {
         $oum_start_region = current( $regions_filtered );
     }
 }
-
 $locations = get_posts( $query );
 $locations_list = array();
 foreach ( $locations as $post_id ) {
@@ -176,10 +167,9 @@ foreach ( $locations as $post_id ) {
     $location_meta = get_post_meta( $post_id, '_oum_location_key', true );
     $name = str_replace( "'", "\\'", strip_tags( get_the_title( $post_id ) ) );
     $address = ( isset( $location_meta['address'] ) ? str_replace( "'", "\\'", preg_replace( '/\\r|\\n/', '', $location_meta['address'] ) ) : '' );
-    $text = ( isset( $location_meta["text"] ) ? str_replace( "'", "\\'", str_replace( array( "\r\n", "\r", "\n" ), "<br>", $location_meta["text"] ) ) : '' );
+    $text = ( isset( $location_meta["text"] ) ? str_replace( "'", "\\'", str_replace( array("\r\n", "\r", "\n"), "<br>", $location_meta["text"] ) ) : '' );
     $image = get_post_meta( $post_id, '_oum_location_image', true );
     $image_thumb = null;
-    
     if ( stristr( $image, 'oum-useruploads' ) ) {
         //image uploaded from frontend
         $image_thumb = get_post_meta( $post_id, '_oum_location_image_thumb', true );
@@ -190,7 +180,6 @@ foreach ( $locations as $post_id ) {
             $image_thumb = wp_get_attachment_image_url( $image_id, 'medium' );
         }
     }
-    
     if ( isset( $image_thumb ) && $image_thumb != '' ) {
         //use thumbnail if available
         $image = $image_thumb;
@@ -229,9 +218,9 @@ foreach ( $locations as $post_id ) {
         'lat' => $location_meta['lat'],
         'lng' => $location_meta['lng'],
     );
-    
-    if ( isset( $type ) && $type ) {
+    if ( isset( $location_types ) && is_array( $location_types ) && count( $location_types ) == 1 && !get_option( 'oum_enable_multiple_marker_types' ) ) {
         //get current location icon from oum-type taxonomy
+        $type = $location_types[0];
         $current_marker_icon = ( get_term_meta( $type->term_id, 'oum_marker_icon', true ) ? get_term_meta( $type->term_id, 'oum_marker_icon', true ) : 'default' );
         $current_marker_user_icon = get_term_meta( $type->term_id, 'oum_marker_user_icon', true );
     } else {
@@ -239,14 +228,11 @@ foreach ( $locations as $post_id ) {
         $current_marker_icon = ( get_option( 'oum_marker_icon' ) ? get_option( 'oum_marker_icon' ) : 'default' );
         $current_marker_user_icon = get_option( 'oum_marker_user_icon' );
     }
-    
-    
     if ( $current_marker_icon == 'user1' && $current_marker_user_icon ) {
         $icon = esc_url( $current_marker_user_icon );
     } else {
         $icon = esc_url( $this->plugin_url ) . 'src/leaflet/images/marker-icon_' . esc_attr( $current_marker_icon ) . '-2x.png';
     }
-    
     // collect locations for JS use
     $location = array(
         'post_id'       => $post_id,
@@ -261,17 +247,15 @@ foreach ( $locations as $post_id ) {
         'icon'          => $icon,
         'custom_fields' => $custom_fields,
     );
-    
-    if ( isset( $type ) && $type ) {
-        $location['type_term_id'] = $type->term_id;
-        $location['type_name'] = $type->name;
+    if ( isset( $location_types ) && is_array( $location_types ) && count( $location_types ) > 0 ) {
+        foreach ( $location_types as $term ) {
+            $location['types'][] = (string) $term->term_taxonomy_id;
+        }
     }
-    
     $locations_list[] = $location;
 }
 $oum_use_settings_start_location = 'false';
 // Set focus for map init
-
 if ( isset( $block_attributes['lat'] ) && $block_attributes['lat'] != '' && isset( $block_attributes['long'] ) && $block_attributes['long'] != '' && isset( $block_attributes['zoom'] ) && $block_attributes['zoom'] != '' ) {
     //get lat, long, zoom from shortcode attributes
     $start_lat = str_replace( ',', '.', $block_attributes['lat'] );
@@ -299,7 +283,6 @@ if ( isset( $block_attributes['lat'] ) && $block_attributes['lat'] != '' && isse
     $start_lng = '0';
     $start_zoom = '1';
 }
-
 $i = 0;
 // BUGFIX: resolves issue with non-unique ids when caching inline js with 3rd party plugins
 // todo: allow multiple maps/shortcodes on same site

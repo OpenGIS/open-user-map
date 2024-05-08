@@ -48,6 +48,38 @@ window.addEventListener('load', function(e) {
     this.nextElementSibling.querySelector('span').textContent = this.files[0].name;
   }
 
+  // Create leaflet markers based on "oum_all_locations" json
+  function addMarkers() {
+    oum_all_locations.forEach(location => {
+      let marker = L.marker([location.lat, location.lng], {
+        title: location.title,
+        post_id: location.post_id,
+        content: location.title + ' | ' + location.content.replace(/(<([^>]+)>)/gi, " ").replace(/\s\s+/g, " "),
+        icon: L.icon({
+          iconUrl: location.icon,
+          iconSize: [26, 41],
+          iconAnchor: [13, 41],
+          popupAnchor: [0, -25],
+          shadowUrl: marker_shadow_url,
+          shadowSize: [41, 41],
+          shadowAnchor: [13, 41]
+        }),
+        types: location.types || []
+      });
+      let popup = L.responsivePopup().setContent(location.content);
+      marker.bindPopup(popup);
+      oumAllMarkers.push(marker);
+    });
+  }
+
+  // Use this to initialize markers and add them to the map initially
+  function initializeMarkers() {
+    addMarkers();  // Fill the oumAllMarkers array
+    oumAllMarkers.forEach(marker => {
+      oumMarkersLayer.addLayer(marker);  // Add all markers to the markers LayerGroup or ClusterGroup
+    });
+  }
+
 
   // VARIABLES
 
@@ -73,13 +105,15 @@ window.addEventListener('load', function(e) {
     gestureHandling: enableGestureHandlingMap,
     zoomSnap: 0.5,
     zoomDelta: 0.5,
-    attributionControl: false,
+    attributionControl: true,
     fullscreenControl: enableFullscreen,
     fullscreenControlOptions: {
       position: 'topleft',
       fullscreenElement: fullscreenContainer,
     }
   });
+
+  map.attributionControl.setPrefix(false);
 
   // prevent moving/zoom outside main world bounds
   let world_bounds = L.latLngBounds(L.latLng(-60, -190), L.latLng(80, 190));
@@ -205,17 +239,17 @@ window.addEventListener('load', function(e) {
 
   // ADD LOCATIONS
 
-  // Parent Layer (has subgroups of markers or all markers)
-  let markers;
+  let oumAllMarkers = []; // holds all markers
+  let oumMarkersLayer; // Marker parent layer
 
   if (!oum_enable_cluster) {
     // clustering disabled
-    markers = L.layerGroup({
+    oumMarkersLayer = L.layerGroup({
       chunkedLoading: true
     });
   } else {
     // clustering enabled
-    markers = L.markerClusterGroup({
+    oumMarkersLayer = L.markerClusterGroup({
       showCoverageOnHover: false,
       removeOutsideVisibleBounds: false,
       maxClusterRadius: 40,
@@ -223,105 +257,12 @@ window.addEventListener('load', function(e) {
     });
   }
 
-  // Add parent group to map
-  markers.addTo(map);
+  // Add markers layer to map
+  oumMarkersLayer.addTo(map);
 
+  // Call this function initially to set up markers
+  initializeMarkers();
 
-  // Handle locations grouped by types (marker categories)
-  if(locations_by_type.length > 0) {
-
-    // Control: Legend (toggle marker subgroups)
-    const legendControl = L.control.layers(null, null, {
-      collapsed: oum_collapse_filter,
-      position: 'bottomright',
-      sortLayers: true,
-    });
-
-    locations_by_type.forEach(function(typeGroup) {
-
-      let locations = [];
-
-      // create markers
-      for (let i = 0; i < typeGroup.locations.length; i++) {
-        let marker = L.marker(
-          [
-            typeGroup.locations[i].lat,
-            typeGroup.locations[i].lng
-          ], {
-            title: typeGroup.locations[i].title,
-            post_id: typeGroup.locations[i].post_id,
-            content: typeGroup.locations[i].title + ' | ' + typeGroup.locations[i].content.replace(/(<([^>]+)>)/gi, " ").replace(/\s\s+/g, " "),
-            icon: L.icon({
-              iconUrl: typeGroup.locations[i].icon,
-              iconSize: [26, 41],
-              iconAnchor: [13, 41],
-              popupAnchor: [0, -25],
-              shadowUrl: marker_shadow_url,
-              shadowSize: [41, 41],
-              shadowAnchor: [13, 41]
-            })
-          }
-        );
-
-        let popup = L.responsivePopup().setContent(typeGroup.locations[i].content);
-        marker.bindPopup(popup);
-        locations.push(marker);
-      }
-
-      // build subgroup
-      let subgroup = L.featureGroup.subGroup(markers, locations); 
-
-      // add subgroup to map
-      subgroup.addTo(map);
-
-      // add subgroup to legend
-      legendControl.addOverlay(subgroup, `<span style="display: none">${typeGroup.name}</span><img src="${typeGroup.icon}">${typeGroup.name}`);
-      
-    });
-
-    // add legend to map
-    legendControl.addTo(map);
-
-  }
-
-  // Handle locations without types
-  if(locations_without_type.length > 0) {
-
-    let locations = [];
-
-    // create markers
-    for (let i = 0; i < locations_without_type.length; i++) {
-      let marker = L.marker(
-        [
-          locations_without_type[i].lat,
-          locations_without_type[i].lng
-        ], {
-          title: locations_without_type[i].title,
-          post_id: locations_without_type[i].post_id,
-          content: locations_without_type[i].title + ' | ' + locations_without_type[i].content.replace(/(<([^>]+)>)/gi, " ").replace(/\s\s+/g, " "),
-          icon: L.icon({
-            iconUrl: locations_without_type[i].icon,
-            iconSize: [26, 41],
-            iconAnchor: [13, 41],
-            popupAnchor: [0, -25],
-            shadowUrl: marker_shadow_url,
-            shadowSize: [41, 41],
-            shadowAnchor: [13, 41]
-          })
-        }
-      );
-      let popup = L.responsivePopup().setContent(locations_without_type[i].content);
-      marker.bindPopup(popup);
-      locations.push(marker);
-    }
-
-    // build subgroup
-    let subgroup = L.featureGroup.subGroup(markers, locations); 
-
-    // add subgroup to map
-    subgroup.addTo(map);
-
-  }
 
 
 
@@ -331,7 +272,7 @@ window.addEventListener('load', function(e) {
   if (oum_enable_searchmarkers_button && (!oum_enable_searchbar || oum_searchbar_type !== 'markers')) {
     L.control.search({
       textPlaceholder: oum_searchmarkers_label,
-      layer: markers,
+      layer: oumMarkersLayer,
       propertyName: 'content',
       initial: false,
       buildTip: customAutoSuggestText,
@@ -347,7 +288,7 @@ window.addEventListener('load', function(e) {
       container: 'oum_search_marker',
       collapsed: false,
       textPlaceholder: oum_searchmarkers_label,
-      layer: markers,
+      layer: oumMarkersLayer,
       propertyName: 'content',
       initial: false,
       buildTip: customAutoSuggestText,
@@ -487,7 +428,7 @@ window.addEventListener('load', function(e) {
   });
 
   // Event: automatically open popup on ?markerid=123
-  markers.eachLayer(function(layer) {
+  oumMarkersLayer.eachLayer(function(layer) {
 
     if(layer.options.post_id && layer.options.post_id === POPUP_MARKER_ID){
 
@@ -521,6 +462,39 @@ window.addEventListener('load', function(e) {
     if(btn.textContent == REGION_ID) {
       btn.click();
     }
+  });
+
+  // Event: Filter Markers
+  document.querySelectorAll('.open-user-map .oum-filter-controls [name="type"]').forEach(input => {
+    input.addEventListener('change', function() {
+
+      // Update function to control visibility based on filters
+
+      var checkedTypes = Array.from(document.querySelectorAll('.open-user-map .oum-filter-controls [name="type"]:checked')).map(input => input.value);
+      console.log('Checked Types:', checkedTypes);
+      
+      oumAllMarkers.forEach(marker => {
+        // Check if the marker has types defined and if it matches any of the checked types
+        const hasTypes = marker.options.types && marker.options.types.length > 0;
+        const matchesCheckedTypes = marker.options.types.some(type => checkedTypes.includes(type));
+  
+        if (hasTypes && matchesCheckedTypes) {
+          // Marker has types and matches one of the checked types, ensure it's visible
+          if (!map.hasLayer(marker)) {
+            oumMarkersLayer.addLayer(marker);
+          }
+        } else if (hasTypes && !matchesCheckedTypes) {
+          // Marker has types but does not match the checked types, hide it
+          oumMarkersLayer.removeLayer(marker);
+        } else {
+          // Marker does not have types defined, it should always remain visible
+          if (!map.hasLayer(marker)) {
+            oumMarkersLayer.addLayer(marker);
+          }
+        }
+      });
+  
+    });
   });
 
   

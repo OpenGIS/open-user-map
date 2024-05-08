@@ -5,23 +5,20 @@
  */
 namespace OpenUserMapPlugin\Pages;
 
-use  OpenUserMapPlugin\Base\BaseController ;
-class Settings extends BaseController
-{
-    public function register()
-    {
-        add_action( 'init', array( $this, 'migrate_deprecated_settings' ) );
-        add_action( 'admin_menu', array( $this, 'add_admin_pages' ) );
-        add_action( 'admin_init', array( $this, 'add_plugin_settings' ) );
-        add_action( 'admin_init', array( $this, 'add_oum_wizard' ) );
-        add_action( 'admin_notices', array( $this, 'show_getting_started_notice' ) );
-        add_action( 'wp_ajax_oum_dismiss_getting_started_notice', array( $this, 'getting_started_dismiss_notice' ) );
-        add_action( 'wp_ajax_oum_csv_export', array( $this, 'csv_export' ) );
-        add_action( 'wp_ajax_oum_csv_import', array( $this, 'csv_import' ) );
+use OpenUserMapPlugin\Base\BaseController;
+class Settings extends BaseController {
+    public function register() {
+        add_action( 'init', array($this, 'migrate_deprecated_settings') );
+        add_action( 'admin_menu', array($this, 'add_admin_pages') );
+        add_action( 'admin_init', array($this, 'add_plugin_settings') );
+        add_action( 'admin_init', array($this, 'add_oum_wizard') );
+        add_action( 'admin_notices', array($this, 'show_getting_started_notice') );
+        add_action( 'wp_ajax_oum_dismiss_getting_started_notice', array($this, 'getting_started_dismiss_notice') );
+        add_action( 'wp_ajax_oum_csv_export', array($this, 'csv_export') );
+        add_action( 'wp_ajax_oum_csv_import', array($this, 'csv_import') );
     }
-    
-    public function add_admin_pages()
-    {
+
+    public function add_admin_pages() {
         //add_options_page('Open User Map', 'Open User Map', 'manage_options', 'open_user_map', array($this, 'admin_index'));
         add_submenu_page(
             'edit.php?post_type=oum-location',
@@ -29,12 +26,11 @@ class Settings extends BaseController
             'Settings',
             'manage_options',
             'open-user-map-settings',
-            array( $this, 'admin_index' )
+            array($this, 'admin_index')
         );
     }
-    
-    public function add_plugin_settings()
-    {
+
+    public function add_plugin_settings() {
         register_setting( 'open-user-map-settings-getting-started-notice', 'oum_getting_started_notice_dismissed' );
         register_setting( 'open-user-map-settings-group', 'oum_map_style', array(
             'sanitize_callback' => 'sanitize_text_field',
@@ -52,7 +48,7 @@ class Settings extends BaseController
             'sanitize_callback' => 'sanitize_text_field',
         ) );
         register_setting( 'open-user-map-settings-group', 'oum_map_height', array(
-            'sanitize_callback' => array( $this, 'validate_size' ),
+            'sanitize_callback' => array($this, 'validate_size'),
         ) );
         register_setting( 'open-user-map-settings-group', 'oum_map_size_mobile', array(
             'sanitize_callback' => 'sanitize_text_field',
@@ -61,13 +57,13 @@ class Settings extends BaseController
             'sanitize_callback' => 'sanitize_text_field',
         ) );
         register_setting( 'open-user-map-settings-group', 'oum_start_lat', array(
-            'sanitize_callback' => array( $this, 'validate_geocoordinate' ),
+            'sanitize_callback' => array($this, 'validate_geocoordinate'),
         ) );
         register_setting( 'open-user-map-settings-group', 'oum_start_lng', array(
-            'sanitize_callback' => array( $this, 'validate_geocoordinate' ),
+            'sanitize_callback' => array($this, 'validate_geocoordinate'),
         ) );
         register_setting( 'open-user-map-settings-group', 'oum_start_zoom', array(
-            'sanitize_callback' => array( $this, 'validate_zoom' ),
+            'sanitize_callback' => array($this, 'validate_zoom'),
         ) );
         register_setting( 'open-user-map-settings-group', 'oum_enable_fixed_map_bounds', array(
             'sanitize_callback' => 'sanitize_text_field',
@@ -160,7 +156,7 @@ class Settings extends BaseController
             'sanitize_callback' => 'sanitize_text_field',
         ) );
         register_setting( 'open-user-map-settings-group', 'oum_custom_fields', array(
-            'sanitize_callback' => array( $this, 'validate_array' ),
+            'sanitize_callback' => array($this, 'validate_array'),
         ) );
         register_setting( 'open-user-map-settings-group', 'oum_enable_scrollwheel_zoom_map', array(
             'sanitize_callback' => 'sanitize_text_field',
@@ -246,6 +242,9 @@ class Settings extends BaseController
         register_setting( 'open-user-map-settings-group', 'oum_enable_empty_marker_type', array(
             'sanitize_callback' => 'sanitize_text_field',
         ) );
+        register_setting( 'open-user-map-settings-group', 'oum_enable_multiple_marker_types', array(
+            'sanitize_callback' => 'sanitize_text_field',
+        ) );
         register_setting( 'open-user-map-settings-group', 'oum_collapse_filter', array(
             'sanitize_callback' => 'sanitize_text_field',
         ) );
@@ -274,7 +273,7 @@ class Settings extends BaseController
             'sanitize_callback' => 'wp_kses_post',
         ) );
         register_setting( 'open-user-map-settings-group-wizard-1', 'oum_wizard_usecase', array(
-            'sanitize_callback' => array( $this, 'process_wizard_usecase' ),
+            'sanitize_callback' => array($this, 'process_wizard_usecase'),
         ) );
         register_setting( 'open-user-map-settings-group-wizard-1', 'oum_wizard_usecase_done', array(
             'sanitize_callback' => 'sanitize_text_field',
@@ -283,9 +282,8 @@ class Settings extends BaseController
             'sanitize_callback' => 'sanitize_text_field',
         ) );
     }
-    
-    public function migrate_deprecated_settings()
-    {
+
+    public function migrate_deprecated_settings() {
         // Variant 1: invert old settings
         $options = array(
             'oum_disable_add_location'  => 'oum_enable_add_location',
@@ -306,13 +304,11 @@ class Settings extends BaseController
                 //error_log('Open User Map: Deprecated option ' . $old_option . ' does not exist. Nothing to do.');
                 continue;
             }
-            
-            if ( empty($old_setting) ) {
+            if ( empty( $old_setting ) ) {
                 $new_setting = 'on';
             } else {
                 $new_setting = '';
             }
-            
             //update (or create) new
             update_option( $new_option, $new_setting );
             error_log( 'Open User Map: Update new option ' . $new_option . ' from old option ' . $old_option . '. New Value: ' . $new_setting );
@@ -346,9 +342,8 @@ class Settings extends BaseController
             update_option( 'oum_map_style', 'CartoDB.Positron' );
         }
     }
-    
-    public function add_oum_wizard()
-    {
+
+    public function add_oum_wizard() {
         if ( get_option( 'oum_enable_add_location' ) !== 'on' && get_option( 'oum_enable_add_location' ) !== '' || get_option( 'oum_wizard_usecase_done' ) && !get_option( 'oum_wizard_finish_done' ) ) {
             add_action( 'admin_body_class', function ( $class ) {
                 $class .= ' oum-settings-wizard';
@@ -356,14 +351,12 @@ class Settings extends BaseController
             } );
         }
     }
-    
-    public function admin_index()
-    {
+
+    public function admin_index() {
         require_once $this->plugin_path . 'templates/page-backend-settings.php';
     }
-    
-    public static function validate_geocoordinate( $input )
-    {
+
+    public static function validate_geocoordinate( $input ) {
         // Validation
         $geocoordinate_validated = floatval( str_replace( ',', '.', sanitize_text_field( $input ) ) );
         if ( !$geocoordinate_validated && $geocoordinate_validated != '0' ) {
@@ -371,9 +364,8 @@ class Settings extends BaseController
         }
         return $geocoordinate_validated;
     }
-    
-    public static function validate_zoom( $input )
-    {
+
+    public static function validate_zoom( $input ) {
         // Validation
         $zoom_validated = floatval( str_replace( ',', '.', sanitize_text_field( $input ) ) );
         if ( !$zoom_validated ) {
@@ -381,22 +373,19 @@ class Settings extends BaseController
         }
         return $zoom_validated;
     }
-    
-    public static function validate_size( $input )
-    {
+
+    public static function validate_size( $input ) {
         // Add px if it's missing
         $size_validated = ( is_numeric( $input ) ? $input . 'px' : sanitize_text_field( $input ) );
         return $size_validated;
     }
-    
-    public function validate_array( $array )
-    {
+
+    public function validate_array( $array ) {
         // if not an array
         if ( !is_array( $array ) ) {
             return '';
         }
         foreach ( $array as &$value ) {
-            
             if ( !is_array( $value ) ) {
                 // sanitize if value is not an array
                 $value = sanitize_text_field( $value );
@@ -404,13 +393,11 @@ class Settings extends BaseController
                 // go inside this function again
                 $this->validate_array( $value );
             }
-        
         }
         return $array;
     }
-    
-    public static function show_getting_started_notice()
-    {
+
+    public static function show_getting_started_notice() {
         // return if already dismissed
         if ( get_option( 'oum_getting_started_notice_dismissed' ) ) {
             return;
@@ -422,20 +409,17 @@ class Settings extends BaseController
             return;
         }
         // Render the notice's HTML.
-        echo  '<div class="notice oum-getting-started-notice notice-success is-dismissible">' ;
-        echo  sprintf( __( '<h3>🚀 Getting started with Open User Map</h3><ol><li>Use the page editor or Elementor to insert the <b>"Open User Map"</b> block onto a page. Alternatively, you can use the shortcode <code>[open-user-map]</code></li><li>You can <a href="%s">manage Locations</a> under <i>Open User Map > All Locations</i></li><li><a href="%s">Customize</a> styles and features under <i>Open User Map > Settings</i></li></ol>', 'open-user-map' ), 'edit.php?post_type=oum-location', 'edit.php?post_type=oum-location&page=open-user-map-settings' ) ;
-        echo  '</div>' ;
+        echo '<div class="notice oum-getting-started-notice notice-success is-dismissible">';
+        echo sprintf( __( '<h3>🚀 Getting started with Open User Map</h3><ol><li>Use the page editor or Elementor to insert the <b>"Open User Map"</b> block onto a page. Alternatively, you can use the shortcode <code>[open-user-map]</code></li><li>You can <a href="%s">manage Locations</a> under <i>Open User Map > All Locations</i></li><li><a href="%s">Customize</a> styles and features under <i>Open User Map > Settings</i></li></ol>', 'open-user-map' ), 'edit.php?post_type=oum-location', 'edit.php?post_type=oum-location&page=open-user-map-settings' );
+        echo '</div>';
     }
-    
-    public static function getting_started_dismiss_notice()
-    {
+
+    public static function getting_started_dismiss_notice() {
         update_option( 'oum_getting_started_notice_dismissed', 1 );
     }
-    
-    public function process_wizard_usecase( $input )
-    {
+
+    public function process_wizard_usecase( $input ) {
         // Adjust OUM settings based on the wizard
-        
         if ( $input == 1 ) {
             // everybody
             update_option( 'oum_enable_add_location', 'on' );
@@ -455,18 +439,14 @@ class Settings extends BaseController
             //disable location date
             update_option( 'oum_enable_location_date', '' );
         }
-        
         return $input;
     }
-    
-    public function csv_export()
-    {
-        
+
+    public function csv_export() {
         if ( isset( $_POST['action'] ) && $_POST['action'] == 'oum_csv_export' ) {
             // Initialize error handling
             $error = new \WP_Error();
             // TODO: Exit if no nonce
-            
             if ( $error->has_errors() ) {
                 // Return errors
                 wp_send_json_error( $error );
@@ -486,6 +466,7 @@ class Settings extends BaseController
                         'image'        => oum_get_location_value( 'image', $post_id, true ),
                         'audio'        => oum_get_location_value( 'audio', $post_id, true ),
                         'type'         => oum_get_location_value( 'type', $post_id ),
+                        'type'         => '[' . oum_get_location_value( 'type', $post_id ) . ']',
                         'address'      => oum_get_location_value( 'address', $post_id ),
                         'lat'          => oum_get_location_value( 'lat', $post_id ),
                         'lng'          => oum_get_location_value( 'lng', $post_id ),
@@ -517,16 +498,13 @@ class Settings extends BaseController
                         $locations_list[$i][$j] = str_replace( '"', '""', $val );
                     }
                 }
-                echo  json_encode( $locations_list ) ;
+                echo json_encode( $locations_list );
                 die;
             }
-        
         }
-    
     }
-    
-    public function detectDelimiter( $csvFile )
-    {
+
+    public function detectDelimiter( $csvFile ) {
         $delimiters = array(
             ';'  => 0,
             ','  => 0,
@@ -541,10 +519,8 @@ class Settings extends BaseController
         }
         return array_search( max( $delimiters ), $delimiters );
     }
-    
-    public function csv_import()
-    {
-        
+
+    public function csv_import() {
         if ( isset( $_POST['action'] ) && $_POST['action'] == 'oum_csv_import' ) {
             // Initialize error handling
             $error = new \WP_Error();
@@ -562,7 +538,6 @@ class Settings extends BaseController
                 $error->add( '001', 'File upload failed.' );
             }
             // TODO: Exit if no CSV filetype
-            
             if ( $error->has_errors() ) {
                 // Return errors
                 wp_send_json_error( $error );
@@ -579,15 +554,13 @@ class Settings extends BaseController
                 }
                 fclose( $file_to_read );
                 // build assoziative array
-                array_walk( $rows, function ( &$a ) use( $rows ) {
+                array_walk( $rows, function ( &$a ) use($rows) {
                     $a = array_combine( $rows[0], $a );
-                    
                     if ( is_array( $a ) ) {
                         $a = array_combine( $rows[0], $a );
                     } else {
                         error_log( 'Open User Map: a row is not of type array and therefor will not be imported' );
                     }
-                
                 } );
                 array_shift( $rows );
                 # remove column header
@@ -596,7 +569,11 @@ class Settings extends BaseController
                 $cnt_imported_locations = 0;
                 foreach ( $locations as $location ) {
                     // Marker categories
-                    $types = implode( ',', array( $location['type'] ) );
+                    $types = $location['type'];
+                    if ( strpos( $types, '[', 0 ) !== false && strpos( $types, ']', -1 ) !== false ) {
+                        $types = substr( $types, 1, -1 );
+                        $types = explode( '|', $types );
+                    }
                     // update or insert post
                     if ( $location['post_id'] == '' ) {
                         $location['post_id'] = 0;
@@ -607,10 +584,9 @@ class Settings extends BaseController
                         'post_title' => $location['title'],
                         'post_name'  => sanitize_title( $location['title'] ),
                         'tax_input'  => array(
-                        'oum-type' => $types,
-                    ),
+                            'oum-type' => $types,
+                        ),
                     ) );
-                    
                     if ( $insert_post ) {
                         // Add fields
                         $fields = array(
@@ -632,26 +608,21 @@ class Settings extends BaseController
                         foreach ( $customfields as $key => $val ) {
                             $id = explode( '_', $key )[1];
                             // transform [A|B|C] to array
-                            
                             if ( strpos( $val, '[', 0 ) !== false && strpos( $val, ']', -1 ) !== false ) {
                                 $val = substr( $val, 1, -1 );
                                 $val = explode( '|', $val );
                             }
-                            
                             $fields['oum_location_custom_fields'][$id] = $val;
                         }
                         // Validate and Save
                         \OpenUserMapPlugin\Base\LocationController::save_fields( $insert_post, $fields );
                         $cnt_imported_locations++;
                     }
-                
                 }
                 // return success message
                 wp_send_json_success( $cnt_imported_locations . ' Locations have been imported successfully.' );
             }
-        
         }
-    
     }
 
 }

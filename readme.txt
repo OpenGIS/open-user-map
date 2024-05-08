@@ -2,13 +2,13 @@
 Contributors: 100plugins
 Tags: map, interactive map, leaflet, mapbox, regions
 Requires at least: 5.5
-Tested up to: 6.4
+Tested up to: 6.5
 Requires PHP: 7.0
-Stable tag: 1.3.38
+Stable tag: 1.3.39
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Create a custom map featuring your own locations or an interactive map where anyone can add location pins without registering. The map is based on Leaflet.js (no API keys - it's free!).
+Create a customizable, simple or interactive map. Anyone can add new markers without registering — perfect for collaborative and community projects.
 
 == Description ==
 
@@ -81,6 +81,9 @@ Use the **Gutenberg Block** or **Elementor Widget** to integrate your map or pla
 === 🚀 PRO ===
 The Open User Map plugin is also available in a professional version which includes more styles, more funtionality and more flexibility!
 
+- **Filterable Marker Categories**
+Organize locations in multiple filterable marker groups. Each group (category) can have an individual marker icon and will be accessible to visitors.
+
 - **More custom field types**
 Add custom fields like links, radio buttons, checkboxes, dropdowns and even HTML. Social media links will automatically be rendered as icons.
 
@@ -115,9 +118,6 @@ Pick a color for buttons and icons that fits your theme.
 
 - **Current location**
 Add a button that relocates the map to the users current location.
-
-- **Filterable Marker Categories**
-Organize locations in multiple filterable marker groups. Each group (category) can have an individual marker icon and will be accessible to visitors.
 
 - **Limit visible locations**
 You can limit the locations to be shown by marker categories and by post ids. So it is possible to show only locations of a specific type or to render only one single location. This can be done in the block settings or with shortcode attributes.
@@ -271,6 +271,13 @@ Please do so! You can use the support forum to let us know about your ideas help
 7. More than 60 Settings to customize
 
 == Changelog ==
+= 1.3.39 =
+* 🎉 Feature Request: Marker Categories can now be multi-select (adjust in the settings)
+* Dynamic Marker Icon size
+* Marker Icon mouseover animation
+* Adding map tile provider attribution
+* Freemius SDK update
+
 = 1.3.38 =
 * Bugfix: much better json encodes (should prevent code breaks)
 * Bugfix: Prevent failing shortcode/block rendering by Slim SEO plugin

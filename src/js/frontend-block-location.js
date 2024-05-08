@@ -13,8 +13,10 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
     const map = L.map('mapRenderLocation', {
         scrollWheelZoom: false,
-        attributionControl: false,
+        attributionControl: true,
     });
+
+    map.attributionControl.setPrefix(false);
 
     // Set map style
     if (mapStyle == 'Custom1') {
