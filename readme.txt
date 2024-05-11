@@ -4,7 +4,7 @@ Tags: map, interactive map, leaflet, mapbox, regions
 Requires at least: 5.5
 Tested up to: 6.5
 Requires PHP: 7.0
-Stable tag: 1.3.39
+Stable tag: 1.3.40
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -271,6 +271,10 @@ Please do so! You can use the support forum to let us know about your ideas help
 7. More than 60 Settings to customize
 
 == Changelog ==
+= 1.3.40 =
+* Bugfix: Marker Category Icons
+* Improve Marker Category Box styling
+
 = 1.3.39 =
 * 🎉 Feature Request: Marker Categories can now be multi-select (adjust in the settings)
 * Dynamic Marker Icon size

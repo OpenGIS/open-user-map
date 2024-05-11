@@ -209,6 +209,58 @@ if ( $oum_enable_add_location === 'on' ) {
 ?>
 
     <?php 
+if ( $types ) {
+    ?>
+      <div class="oum-filter-controls <?php 
+    echo $oum_collapse_filter;
+    ?>">
+        <div class="oum-filter-toggle"></div>
+        <div class="oum-filter-list">
+          <?php 
+    foreach ( $types as $type ) {
+        ?>
+
+            <?php 
+        if ( $type->term_id && get_term_meta( $type->term_id, 'oum_marker_icon', true ) ) {
+            //get type marker icon from oum-type taxonomy
+            $type_marker_icon = get_term_meta( $type->term_id, 'oum_marker_icon', true );
+            $type_marker_user_icon = get_term_meta( $type->term_id, 'oum_marker_user_icon', true );
+        } else {
+            //get type marker icon from settings
+            $type_marker_icon = $marker_icon;
+            $type_marker_user_icon = $marker_user_icon;
+        }
+        if ( $type_marker_icon == 'user1' && $type_marker_user_icon ) {
+            $icon = esc_url( $type_marker_user_icon );
+        } else {
+            $icon = esc_url( $this->plugin_url ) . 'src/leaflet/images/marker-icon_' . esc_attr( $type_marker_icon ) . '-2x.png';
+        }
+        ?>
+
+            <label>
+              <input style="accent-color: <?php 
+        echo $oum_ui_color;
+        ?>" type="checkbox" name="type" value="<?php 
+        echo esc_attr( $type->term_taxonomy_id );
+        ?>" checked>
+              <img src="<?php 
+        echo $icon;
+        ?>">
+              <span><?php 
+        echo esc_html( $type->name );
+        ?></span>
+            </label>
+
+          <?php 
+    }
+    ?>
+        </div>
+      </div>
+    <?php 
+}
+?>
+
+    <?php 
 ?>
 
     <script type="text/javascript" data-category="functional" class="cmplz-native" id="oum-inline-js">
@@ -428,50 +480,5 @@ if ( $oum_map_height_mobile ) {
     </script>
 
   </div>
-
-  <?php 
-if ( $types ) {
-    ?>
-    <div class="oum-filter-controls <?php 
-    echo $oum_collapse_filter;
-    ?>">
-      <div class="oum-filter-toggle"></div>
-      <div class="oum-filter-list">
-        <?php 
-    foreach ( $types as $type ) {
-        ?>
-
-          <?php 
-        $current_marker_icon = ( get_term_meta( $type->term_id, 'oum_marker_icon', true ) ? get_term_meta( $type->term_id, 'oum_marker_icon', true ) : 'default' );
-        $current_marker_user_icon = get_term_meta( $type->term_id, 'oum_marker_user_icon', true );
-        if ( $current_marker_icon == 'user1' && $current_marker_user_icon ) {
-            $icon = esc_url( $current_marker_user_icon );
-        } else {
-            $icon = esc_url( $this->plugin_url ) . 'src/leaflet/images/marker-icon_' . esc_attr( $current_marker_icon ) . '-2x.png';
-        }
-        ?>
-
-          <label>
-            <input style="accent-color: <?php 
-        echo $oum_ui_color;
-        ?>" type="checkbox" name="type" value="<?php 
-        echo esc_attr( $type->term_taxonomy_id );
-        ?>" checked>
-            <img src="<?php 
-        echo $icon;
-        ?>">
-            <span><?php 
-        echo esc_html( $type->name );
-        ?></span>
-          </label>
-
-        <?php 
-    }
-    ?>
-      </div>
-    </div>
-  <?php 
-}
-?>
 
   </div>

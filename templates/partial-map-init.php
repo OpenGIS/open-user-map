@@ -219,14 +219,20 @@ foreach ( $locations as $post_id ) {
         'lng' => $location_meta['lng'],
     );
     if ( isset( $location_types ) && is_array( $location_types ) && count( $location_types ) == 1 && !get_option( 'oum_enable_multiple_marker_types' ) ) {
-        //get current location icon from oum-type taxonomy
         $type = $location_types[0];
-        $current_marker_icon = ( get_term_meta( $type->term_id, 'oum_marker_icon', true ) ? get_term_meta( $type->term_id, 'oum_marker_icon', true ) : 'default' );
-        $current_marker_user_icon = get_term_meta( $type->term_id, 'oum_marker_user_icon', true );
+        if ( $type->term_id && get_term_meta( $type->term_id, 'oum_marker_icon', true ) ) {
+            //get current location icon from oum-type taxonomy
+            $current_marker_icon = get_term_meta( $type->term_id, 'oum_marker_icon', true );
+            $current_marker_user_icon = get_term_meta( $type->term_id, 'oum_marker_user_icon', true );
+        } else {
+            //get current location icon from settings
+            $current_marker_icon = $marker_icon;
+            $current_marker_user_icon = $marker_user_icon;
+        }
     } else {
         //get current location icon from settings
-        $current_marker_icon = ( get_option( 'oum_marker_icon' ) ? get_option( 'oum_marker_icon' ) : 'default' );
-        $current_marker_user_icon = get_option( 'oum_marker_user_icon' );
+        $current_marker_icon = $marker_icon;
+        $current_marker_user_icon = $marker_user_icon;
     }
     if ( $current_marker_icon == 'user1' && $current_marker_user_icon ) {
         $icon = esc_url( $current_marker_user_icon );

@@ -730,6 +730,96 @@
         }
       }
 
+      .oum-filter-controls {
+        position: absolute;
+        z-index: 9999;
+        right: 10px;
+        bottom: 20px;
+  
+        .oum-filter-toggle {
+          display: none;
+          background-color: rgba(255, 255, 255, 0.9);
+          background-image: url('images/ico_marker_categories.png');
+          background-position: center center;
+          background-repeat: no-repeat;
+          background-size: 60%;
+          width: 44px;
+          height: 44px;
+          border: 2px solid rgba(0,0,0,0.2);
+          border-radius: 5px;
+          cursor: pointer;
+          position: relative;
+          z-index: 1;
+        }
+  
+        .oum-filter-list {
+          background: rgba(255, 255, 255, 0.95);
+          padding: 6px;
+          border: 1px solid rgba(0,0,0,0.2);
+          border-radius: 5px;
+          position: absolute;
+          z-index: 2;
+          right: 0;
+          bottom: 0;
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+  
+          label {
+            display: flex;
+            align-items: flex-start;
+            gap: 9px;
+            margin: 0;
+            padding: 0;
+            font-weight: normal;
+            cursor: pointer;
+    
+            input[type="checkbox"] {
+              margin: 0;
+              position: relative;
+              top: 2px;
+              appearance: auto;
+              accent-color: map-get($colors, "primary");
+              position: relative;
+              width: 16px;
+              height: 16px;
+              flex-shrink: 0;
+            }
+    
+            img {
+              height: 26px;
+              width: 26px;
+              object-fit: contain;
+              object-position: top;
+              transform: translateY(-10%);
+              flex-shrink: 0;
+            }
+    
+            span {
+              font-size: 12px;
+              white-space: nowrap;
+            }
+          }
+        }
+  
+        &.use-collapse {
+          .oum-filter-toggle {
+            display: block;
+          }
+  
+          .oum-filter-list {
+            display: none;
+            background: white;
+          }
+  
+          &:hover {
+            .oum-filter-list {
+              display: flex;
+            }
+          }
+        }
+      }
+
       .oum-attribution {
         position: absolute;
         bottom: -17px;
@@ -753,97 +843,6 @@
           line-height: 1;
           margin: 0;
           padding: 0;
-        }
-      }
-    }
-
-    .oum-filter-controls {
-      position: absolute;
-      z-index: 9999;
-      right: 10px;
-      bottom: 20px;
-
-      .oum-filter-toggle {
-        display: none;
-        background-color: rgba(255, 255, 255, 0.9);
-        background-image: url('images/ico_marker_categories.png');
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: 60%;
-        width: 44px;
-        height: 44px;
-        border: 2px solid rgba(0,0,0,0.2);
-        border-radius: 5px;
-        cursor: pointer;
-        position: relative;
-        z-index: 1;
-      }
-
-      .oum-filter-list {
-        background: rgba(255, 255, 255, 0.9);
-        padding: 10px;
-        border: 2px solid rgba(0,0,0,0.2);
-        border-radius: 5px;
-        position: absolute;
-        z-index: 2;
-        right: 0;
-        bottom: 0;
-        width: 130px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-
-        label {
-          display: flex;
-          align-items: flex-start;
-          gap: 9px;
-          margin: 0;
-          padding: 0;
-          font-weight: normal;
-          cursor: pointer;
-  
-          input[type="checkbox"] {
-            margin: 0;
-            position: relative;
-            top: 2px;
-            appearance: auto;
-            accent-color: map-get($colors, "primary");
-            position: relative;
-            width: 16px;
-            height: 16px;
-            flex-shrink: 0;
-          }
-  
-          img {
-            height: 26px;
-            width: 26px;
-            object-fit: contain;
-            object-position: top;
-            transform: translateY(-10%);
-            flex-shrink: 0;
-          }
-  
-          span {
-            font-size: 13px;
-            hyphens: auto;
-          }
-        }
-      }
-
-      &.use-collapse {
-        .oum-filter-toggle {
-          display: block;
-        }
-
-        .oum-filter-list {
-          display: none;
-          background: white;
-        }
-
-        &:hover {
-          .oum-filter-list {
-            display: flex;
-          }
         }
       }
     }
