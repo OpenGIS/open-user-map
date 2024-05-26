@@ -184,15 +184,18 @@ if ( get_option( 'oum_enable_add_location' ) !== 'on' && get_option( 'oum_enable
     echo __( 'Form Settings', 'open-user-map' );
     ?></a>
         <a href="#tab-3" class="nav-tab"><?php 
-    echo __( 'Regions', 'open-user-map' );
+    echo __( 'Filters', 'open-user-map' );
     ?></a>
         <a href="#tab-4" class="nav-tab"><?php 
-    echo __( 'Advanced', 'open-user-map' );
+    echo __( 'Regions', 'open-user-map' );
     ?></a>
         <a href="#tab-5" class="nav-tab"><?php 
-    echo __( 'Import & Export', 'open-user-map' );
+    echo __( 'Advanced', 'open-user-map' );
     ?></a>
         <a href="#tab-6" class="nav-tab"><?php 
+    echo __( 'Import & Export', 'open-user-map' );
+    ?></a>
+        <a href="#tab-7" class="nav-tab"><?php 
     echo __( 'Help & Getting Started', 'open-user-map' );
     ?></a>
       </nav>
@@ -293,7 +296,7 @@ if ( get_option( 'oum_enable_add_location' ) !== 'on' && get_option( 'oum_enable
     }
     ?>
 
-<?php 
+                <?php 
     //custom map styles
     $custom_items = $this->custom_map_styles;
     foreach ( $custom_items as $val => $label ) {
@@ -336,7 +339,7 @@ if ( get_option( 'oum_enable_add_location' ) !== 'on' && get_option( 'oum_enable
             <tr valign="top">
               <th scope="row">
                 <?php 
-    echo __( 'Marker Icon', 'open-user-map' );
+    echo __( 'Default Marker Icon', 'open-user-map' );
     ?>
               </th>
               <td>
@@ -950,64 +953,6 @@ if ( get_option( 'oum_enable_add_location' ) !== 'on' && get_option( 'oum_enable
               </td>
             </tr>
 
-            <?php 
-    ?>
-
-            <?php 
-    if ( !oum_fs()->is_plan_or_trial( 'pro' ) || !oum_fs()->is_premium() ) {
-        ?>
-
-              <tr valign="top" class="oum-gopro-tr">
-                <th scope="row">
-                  <?php 
-        echo __( 'Filterable Marker Categories', 'open-user-map' );
-        ?>
-                  <br><span class="oum-pro">PRO</span><br>
-                  <a class="oum-gopro-text" href="<?php 
-        echo oum_fs()->get_upgrade_url();
-        ?>"><?php 
-        echo __( 'Upgrade to PRO and use marker categories. Each category can have a custom marker icon.', 'open-user-map' );
-        ?></a>
-                </th>
-                <td>
-                  <input class="oum-switch" type="checkbox" disabled>
-                  <label><?php 
-        echo __( 'Enable', 'open-user-map' );
-        ?></label>
-                  <br>
-                  <br>
-                  <input class="oum-switch" type="checkbox" disabled>
-                  <label><?php 
-        echo __( 'Allow multiple selections', 'open-user-map' );
-        ?></label>
-                  <br>
-                  <br>
-                  <input class="oum-switch" type="checkbox" disabled>
-                  <label><?php 
-        echo __( 'Allow empty selection', 'open-user-map' );
-        ?></label>
-                  <br>
-                  <br>
-                  <input class="oum-switch" type="checkbox" disabled>
-                  <label><?php 
-        echo __( 'Collapsed filterbox design (on map)', 'open-user-map' );
-        ?></label>
-                  <br>
-                  <br>
-                  <strong><?php 
-        echo __( 'Custom Label:', 'open-user-map' );
-        ?></strong><br>
-                  <input disabled class="regular-text" type="text" value="" placeholder="<?php 
-        echo esc_attr( $this->oum_marker_types_label_default );
-        ?>">
-                  <br><br>
-                </td>
-              </tr>
-
-            <?php 
-    }
-    ?>
-
             <tr valign="top">
               <th scope="row">
                 <?php 
@@ -1502,6 +1447,86 @@ if ( get_option( 'oum_enable_add_location' ) !== 'on' && get_option( 'oum_enable
         <div id="tab-3" class="tab-pane">
           <table class="form-table">
 
+          <?php 
+    ?>
+
+            <?php 
+    if ( !oum_fs()->is_plan_or_trial( 'pro' ) || !oum_fs()->is_premium() ) {
+        ?>
+
+              <tr valign="top" class="oum-gopro-tr">
+                <th scope="row">
+                  <?php 
+        echo __( '„Marker Categories“ field', 'open-user-map' );
+        ?>
+                  <br><span class="oum-pro">PRO</span><br>
+                  <a class="oum-gopro-text" href="<?php 
+        echo oum_fs()->get_upgrade_url();
+        ?>"><?php 
+        echo __( 'Upgrade to PRO and use marker categories. Each category can have a custom marker icon.', 'open-user-map' );
+        ?></a>
+                </th>
+                <td>
+                  <input class="oum-switch" type="checkbox" disabled>
+                  <label><?php 
+        echo __( 'Enable', 'open-user-map' );
+        ?></label>
+                  <br>
+                  <br>
+                  <strong><?php 
+        echo __( 'Custom Label:', 'open-user-map' );
+        ?></strong><br>
+                  <input disabled class="regular-text" type="text" value="" placeholder="<?php 
+        echo esc_attr( $this->oum_marker_types_label_default );
+        ?>">
+                  <br><br>
+                  <input class="oum-switch" type="checkbox" disabled>
+                  <label><?php 
+        echo __( 'Allow multiple selections', 'open-user-map' );
+        ?></label>
+                  <br>
+                  <br>
+                  <input class="oum-switch" type="checkbox" disabled>
+                  <label><?php 
+        echo __( 'Allow empty selection', 'open-user-map' );
+        ?></label>
+                  <br>
+                  <br>
+                </td>
+              </tr>
+
+              <tr valign="top" class="oum-gopro-tr">
+                <th scope="row">
+                  <?php 
+        echo __( 'Filterbox', 'open-user-map' );
+        ?>
+                  <br><span class="oum-pro">PRO</span><br>
+                  <a class="oum-gopro-text" href="<?php 
+        echo oum_fs()->get_upgrade_url();
+        ?>"><?php 
+        echo __( 'Upgrade to PRO and add category filters to the map.', 'open-user-map' );
+        ?></a>
+                </th>
+                <td>
+                  <input class="oum-switch" type="checkbox" disabled>
+                  <label><?php 
+        echo __( 'Collapsed design', 'open-user-map' );
+        ?></label>
+                  <br>
+                  <br>
+                </td>
+              </tr>
+
+            <?php 
+    }
+    ?>
+
+          </table>
+        </div>
+
+        <div id="tab-4" class="tab-pane">
+          <table class="form-table">
+
             <tr valign="top">
               <?php 
     $oum_enable_regions = get_option( 'oum_enable_regions' );
@@ -1554,7 +1579,7 @@ if ( get_option( 'oum_enable_add_location' ) !== 'on' && get_option( 'oum_enable
           </table>
         </div>
 
-        <div id="tab-4" class="tab-pane">
+        <div id="tab-5" class="tab-pane">
 
           <table class="form-table">
 
@@ -1822,7 +1847,7 @@ if ( get_option( 'oum_enable_add_location' ) !== 'on' && get_option( 'oum_enable
 
         </div>
 
-        <div id="tab-5" class="tab-pane">
+        <div id="tab-6" class="tab-pane">
 
           <table class="form-table">
 
@@ -1914,7 +1939,7 @@ if ( get_option( 'oum_enable_add_location' ) !== 'on' && get_option( 'oum_enable
 
         </div>
         
-        <div id="tab-6" class="tab-pane">
+        <div id="tab-7" class="tab-pane">
 
           <table class="form-table">
 
@@ -2190,12 +2215,12 @@ if ( get_option( 'oum_enable_add_location' ) !== 'on' && get_option( 'oum_enable
             <tr valign="top">
               <th scope="row">
                 <?php 
-    echo __( 'Troubleshooting', 'open-user-map' );
+    echo __( 'Support', 'open-user-map' );
     ?>
               </th>
               <td class="top-padding-20">
                 <?php 
-    echo __( 'Please have a look at the <a href="https://wordpress.org/plugins/open-user-map/#faq" target="_blank">FAQ</a>. We keep it up to date.', 'open-user-map' );
+    echo __( 'Please have a look at our <a href="https://www.open-user-map.com/support/knowledge-base/" target="_blank">Knowledge Base</a> and the <a href="https://wordpress.org/plugins/open-user-map/#faq" target="_blank">FAQ</a>. We keep it up to date.', 'open-user-map' );
     ?>
               </td>
             </tr>

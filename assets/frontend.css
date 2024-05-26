@@ -440,6 +440,9 @@
 .open-user-map .box-wrap .map-wrap .leaflet-map .leaflet-control-geosearch.leaflet-geosearch-button form button.reset:hover {
   opacity: 1;
 }
+.open-user-map .box-wrap .map-wrap .leaflet-map .leaflet-control-geosearch.leaflet-geosearch-button form .results {
+  color: #333;
+}
 .open-user-map .box-wrap .map-wrap .leaflet-map .leaflet-control-geosearch.leaflet-geosearch-button form .results.active {
   width: calc(100% + 30px);
   color: #333;
@@ -633,6 +636,7 @@
 }
 .open-user-map .box-wrap .map-wrap .oum-filter-controls .oum-filter-list {
   background: rgba(255, 255, 255, 0.95);
+  color: #333;
   padding: 6px;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 5px;
@@ -680,11 +684,14 @@
   display: block;
 }
 .open-user-map .box-wrap .map-wrap .oum-filter-controls.use-collapse .oum-filter-list {
-  display: none;
-  background: white;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
-.open-user-map .box-wrap .map-wrap .oum-filter-controls.use-collapse:hover .oum-filter-list {
-  display: flex;
+.open-user-map .box-wrap .map-wrap .oum-filter-controls.use-collapse:hover .oum-filter-list, .open-user-map .box-wrap .map-wrap .oum-filter-controls.use-collapse:focus-within .oum-filter-list {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
 }
 .open-user-map .box-wrap .map-wrap .oum-attribution {
   position: absolute;
@@ -1293,6 +1300,7 @@
 }
 .open-user-map.oum-container-for-fullscreen #location-fullscreen-container .location-content-wrap {
   background-color: #fff;
+  color: #333;
   height: 100%;
   overflow: auto;
 }
@@ -1538,6 +1546,7 @@
 }
 .open-user-map-locations-list .oum-locations-list-item .oum_location_text * {
   color: #000;
+  hyphens: auto;
 }
 .open-user-map-locations-list .oum-locations-list-item .oum_location_text a {
   color: #e02aaf;

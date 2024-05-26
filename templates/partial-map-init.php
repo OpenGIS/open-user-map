@@ -125,7 +125,13 @@ if ( $oum_enable_regions == 'on' ) {
     ) );
 }
 // Taxonomy: Types (Marker Categories)
-$types = ( get_terms( 'oum-type' ) && !is_wp_error( get_terms( 'oum-type' ) ) ? get_terms( 'oum-type' ) : false );
+$types = get_terms( array(
+    'taxonomy'   => 'oum-type',
+    'hide_empty' => false,
+) );
+if ( is_wp_error( $types ) || empty( $types ) ) {
+    $types = false;
+}
 $query = array(
     'post_type'      => 'oum-location',
     'posts_per_page' => -1,
