@@ -8,7 +8,7 @@ Plugin Name: Open User Map
 Plugin URI: https://wordpress.org/plugins/open-user-map/
 Description: Create a customizable, simple or interactive map. Anyone can add new markers without registering — perfect for collaborative and community projects.
 Author: 100plugins
-Version: 1.3.42
+Version: 1.3.43
 Author URI: https://www.open-user-map.com/
 License: GPLv3 or later
 Text Domain: open-user-map

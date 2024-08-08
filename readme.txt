@@ -2,9 +2,9 @@
 Contributors: 100plugins
 Tags: map, interactive map, leaflet, mapbox, regions
 Requires at least: 5.5
-Tested up to: 6.5
+Tested up to: 6.6
 Requires PHP: 7.0
-Stable tag: 1.3.42
+Stable tag: 1.3.43
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -271,6 +271,14 @@ Please do so! You can use the support forum to let us know about your ideas help
 7. More than 60 Settings to customize
 
 == Changelog ==
+= 1.3.43 =
+* Bugfix: Import breaks on empty line
+* Bugfix: font colors on dark theme
+* Add data attributes to custom fields
+* Freemius SDK Update
+* Ensure WordPress 6.6 compatibility
+* Make locations translatable
+
 = 1.3.42 =
 * Bugfix: Filterbox not visible
 

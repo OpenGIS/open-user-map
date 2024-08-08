@@ -570,6 +570,10 @@
               background-repeat: no-repeat;
               background-size: 30px;
               background-color: #fff;
+
+              .results {
+                color: #333;
+              }
   
               input[type=text] {
                 width: calc(100% - 35px);

@@ -39,7 +39,7 @@ foreach ( $locations_list as $location ) {
             }
             if ( is_array( $custom_field['val'] ) ) {
                 array_walk( $custom_field['val'], function ( &$x ) {
-                    $x = '<span>' . $x . '</span>';
+                    $x = '<span data-value="' . $x . '">' . $x . '</span>';
                 } );
                 $custom_fields .= '<div class="oum_custom_field"><strong>' . $custom_field['label'] . ':</strong> ' . implode( '', $custom_field['val'] ) . '</div>';
             } else {
@@ -56,7 +56,7 @@ foreach ( $locations_list as $location ) {
                             $custom_fields .= '<a target="_blank" href="mailto:' . $entry . '">' . $entry . '</a> ';
                         } else {
                             //Text
-                            $custom_fields .= '<span>' . $entry . '</span>';
+                            $custom_fields .= '<span data-value="' . $entry . '">' . $entry . '</span>';
                         }
                     }
                     $custom_fields .= '</div>';
@@ -70,7 +70,7 @@ foreach ( $locations_list as $location ) {
                         $custom_fields .= '<div class="oum_custom_field"><strong>' . $custom_field['label'] . ':</strong> <a target="_blank" href="mailto:' . $custom_field['val'] . '">' . $custom_field['val'] . '</a></div>';
                     } else {
                         //Text
-                        $custom_fields .= '<div class="oum_custom_field"><strong>' . $custom_field['label'] . ':</strong> ' . $custom_field['val'] . '</div>';
+                        $custom_fields .= '<div class="oum_custom_field"><strong>' . $custom_field['label'] . ':</strong> <span data-value="' . $custom_field['val'] . '">' . $custom_field['val'] . '</span></div>';
                     }
                 }
             }

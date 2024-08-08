@@ -555,11 +555,11 @@ class Settings extends BaseController {
                 fclose( $file_to_read );
                 // build assoziative array
                 array_walk( $rows, function ( &$a ) use($rows) {
-                    $a = array_combine( $rows[0], $a );
-                    if ( is_array( $a ) ) {
+                    // Check if the line is empty or not an array
+                    if ( is_array( $a ) && !empty( array_filter( $a, 'strlen' ) ) ) {
                         $a = array_combine( $rows[0], $a );
                     } else {
-                        error_log( 'Open User Map: a row is not of type array and therefor will not be imported' );
+                        error_log( 'Open User Map: an empty line or a row not of type array detected and skipped' );
                     }
                 } );
                 array_shift( $rows );

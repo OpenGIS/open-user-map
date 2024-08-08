@@ -1,0 +1,9 @@
+<wpml-config>
+    <custom-types>
+        <custom-type translate="1">oum-location</custom-type>
+    </custom-types>
+    <taxonomies>
+        <taxonomy translate="1">oum-type</taxonomy>
+        <taxonomy translate="1">oum-region</taxonomy>
+    </taxonomies>
+</wpml-config>

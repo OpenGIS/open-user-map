@@ -471,6 +471,9 @@
   background-size: 30px;
   background-color: #fff;
 }
+.open-user-map .box-wrap .map-wrap .leaflet-map .leaflet-control-geosearch.leaflet-geosearch-bar form .results {
+  color: #333;
+}
 .open-user-map .box-wrap .map-wrap .leaflet-map .leaflet-control-geosearch.leaflet-geosearch-bar form input[type=text] {
   width: calc(100% - 35px);
   padding: 9px 13px 9px 0;
